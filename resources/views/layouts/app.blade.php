@@ -11,7 +11,7 @@
         <aside class="sidebar" aria-label="Hauptnavigation">
             <div class="sidebar__brand">
                 <a class="brand" href="{{ route('events.index') }}">
-                    <span class="brand__logo" aria-hidden="true">H</span>HostPilot
+                    <span class="brand__logo" aria-hidden="true">HP</span>HostPilot
                 </a>
             </div>
             <div class="sidebar__label" id="sidebar-events">Events</div>

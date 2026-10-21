@@ -7,7 +7,7 @@
     <main class="auth" id="main">
         <div class="auth__card">
             <a class="brand" href="{{ route('login') }}">
-                <span class="brand__logo" aria-hidden="true">H</span>HostPilot
+                <span class="brand__logo" aria-hidden="true">HP</span>HostPilot
             </a>
             @yield('content')
         </div>

@@ -8,8 +8,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>@hasSection('title')@yield('title') · @endif{{ config('app.name') }}</title>
 <link rel="manifest" href="{{ asset('manifest.webmanifest') }}">
-<link rel="icon" href="{{ asset('icon.svg') }}" type="image/svg+xml">
-<link rel="apple-touch-icon" href="{{ asset('icon-192.png') }}">
+<link rel="icon" href="{{ asset('favicon.ico') }}" sizes="32x32">
+<link rel="icon" href="{{ asset('app-icons/icon.svg') }}" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{{ asset('app-icons/apple-touch-icon.png') }}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&display=swap" rel="stylesheet">

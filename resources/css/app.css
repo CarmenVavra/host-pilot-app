@@ -171,15 +171,17 @@ textarea {
 }
 
 .brand__logo {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
+    flex: none;
     background: var(--forest);
     color: var(--creme);
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 800;
-    font-size: 15px;
+    font-size: 14px;
+    letter-spacing: -0.03em;
 }
 
 .avatar-link {
@@ -1685,9 +1687,9 @@ textarea {
     }
 
     .sidebar__brand .brand__logo {
-        width: 30px;
-        height: 30px;
-        font-size: 16px;
+        width: 34px;
+        height: 34px;
+        font-size: 15px;
     }
 
     .sidebar__label {

@@ -10,7 +10,7 @@
 
     {{-- Phone: brand bar --}}
     <div class="brandbar only-mobile">
-        <a class="brand" href="{{ route('events.index') }}"><span class="brand__logo" aria-hidden="true">H</span>HostPilot</a>
+        <a class="brand" href="{{ route('events.index') }}"><span class="brand__logo" aria-hidden="true">HP</span>HostPilot</a>
         <a class="avatar-link" href="{{ route('profile.edit') }}" aria-label="Profil von {{ auth()->user()->name }}">
             <span aria-hidden="true">{{ auth()->user()->initials() }}</span>
         </a>
