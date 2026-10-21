@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="_ds/modernist-4d338549-1163-46db-bfa3-3ede5fb15b7d/styles.css">
+<script src="_ds/modernist-4d338549-1163-46db-bfa3-3ede5fb15b7d/_ds_bundle.js"></script>
+<style>body{margin:0;background:#e9e2b4;font-family:Archivo,system-ui,sans-serif}a{color:#416a59}a:hover{color:#39395f}.dv-turn{padding:40px 44px 32px}.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 8px}.dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#39395f;color:#f5eec2;text-decoration:none}.dv-tname{font:800 18px/1.2 Archivo,sans-serif;color:#39395f}.dv-sub{font:600 12px/1.3 Archivo,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#39395f;margin:28px 0 16px;padding-top:10px;border-top:2px solid #39395f}.dv-opts{display:flex;flex-wrap:wrap;gap:36px;align-items:flex-start}.dv-opt{flex:none;display:flex;flex-direction:column;gap:9px;scroll-margin-top:16px}.dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(57,57,95,.14);color:#39395f;text-decoration:none}.dv-olabel{display:flex;align-items:baseline;gap:8px;font:600 12px/1.3 Archivo,sans-serif;color:#39395f}.dv-opt:target .dv-oid{background:#416a59;color:#fff}.dv-next{margin:22px 0 0;font:12px/1.5 Archivo,sans-serif;color:#39395f}</style>
+</helmet>
+<section class="dv-turn" id="t1">
+<div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">HostPilot — Handy-App &amp; Web-App</span></div>
+<p style="margin:0;max-width:760px;font:400 14px/1.5 Archivo,sans-serif;color:#39395f">Modernist-Raster (0 px Radius, 2 px Linien, Archivo, linksbündig) in euren Farben: Creme <b>#f5eec2</b> als Grund, Indigo <b>#39395f</b> für Text und Linien, Waldgrün <b>#416a59</b> für Hauptaktionen, Grün <b>#73a24e</b> / Limette <b>#a9c25d</b> für Akzente. Ergänzt: Papier <b>#fbf7df</b> (Flächen) und Terrakotta <b>#b5533c</b> (Löschen). Das Beispiel-Event «Geburtstags-Brunch Lena» zieht sich durch alle Screens; Gästezahl, Mengen und Häkchen sind live.</p>
+
+<div class="dv-sub">Handy-App · 6 Screens</div>
+<div class="dv-opts">
+
+<!-- 1a Dashboard -->
+<div class="dv-opt" id="1a"><div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Event-Übersicht</div>
+<div style="width:410px;height:832px;background:#39395f;border-radius:52px;padding:10px;box-sizing:border-box">
+<div style="width:100%;height:100%;background:#f5eec2;border-radius:42px;overflow:hidden;position:relative;display:flex;flex-direction:column;font-family:Archivo,sans-serif;color:#39395f">
+<div style="height:46px;flex:none;display:flex;justify-content:space-between;align-items:center;padding:6px 28px 0;font-weight:800;font-size:15px"><span>9:41</span><span style="font-size:12px;font-weight:600;white-space:nowrap">5G ▮▮▮</span></div>
+<div style="padding:10px 20px 0;display:flex;justify-content:space-between;align-items:center">
+<div style="display:flex;align-items:center;gap:8px"><div style="width:28px;height:28px;background:#416a59;color:#f5eec2;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px">H</div><span style="font-weight:800;font-size:18px;letter-spacing:-.01em">HostPilot</span></div>
+<div style="width:34px;height:34px;border:2px solid #39395f;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px">MK</div></div>
+<div style="padding:22px 20px 0"><div style="font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#416a59">3 Events geplant</div>
+<h1 style="font-size:36px;margin:4px 0 14px;line-height:1.05">Deine Events</h1></div>
+<div style="margin:0 20px;display:flex;border:2px solid #39395f"><div style="flex:1;padding:9px 12px;background:#39395f;color:#f5eec2;font-weight:800;font-size:14px">Anstehend</div><div style="flex:1;padding:9px 12px;font-weight:600;font-size:14px;border-left:2px solid #39395f">Vergangen</div></div>
+<div style="flex:1;overflow:hidden;padding:16px 20px 0;display:flex;flex-direction:column;gap:14px">
+<sc-for list="{{ events }}" as="ev" hint-placeholder-count="3">
+<div style="border:2px solid #39395f;background:#fbf7df;flex:none">
+<div style="height:96px;position:relative;background:{{ ev.cover }}"><span style="position:absolute;left:0;top:0;background:#39395f;color:#f5eec2;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:5px 9px">{{ ev.when }}</span><span style="position:absolute;right:8px;bottom:6px;font-size:10px;font-weight:600;color:#39395f;background:#f5eec2;padding:1px 5px">Cover-Bild</span></div>
+<div style="padding:12px 14px 14px;border-top:2px solid #39395f"><div style="font-weight:800;font-size:20px;letter-spacing:-.015em;line-height:1.15">{{ ev.title }}</div>
+<div style="display:flex;gap:16px;margin-top:8px;font-size:13px;font-weight:600">
+<span style="display:flex;align-items:center;gap:6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><rect x="3" y="4" width="18" height="18"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>{{ ev.date }}</span>
+<span style="display:flex;align-items:center;gap:6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><circle cx="9" cy="8" r="4"/><path d="M2 21v-2a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v2"/></svg>{{ ev.guests }} Gäste</span></div></div></div>
+</sc-for>
+</div>
+<div style="position:absolute;right:20px;bottom:24px;width:60px;height:60px;background:#416a59;color:#f5eec2;display:flex;align-items:center;justify-content:center;border:2px solid #39395f;box-shadow:4px 4px 0 #39395f"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"><path d="M12 5v14M5 12h14"/></svg></div>
+</div></div></div>
+
+<!-- 1b Hub -->
+<div class="dv-opt" id="1b"><div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Event-Detail &amp; Hub</div>
+<div style="width:410px;height:832px;background:#39395f;border-radius:52px;padding:10px;box-sizing:border-box">
+<div style="width:100%;height:100%;background:#f5eec2;border-radius:42px;overflow:hidden;position:relative;display:flex;flex-direction:column;font-family:Archivo,sans-serif;color:#39395f">
+<div style="height:46px;flex:none;display:flex;justify-content:space-between;align-items:center;padding:6px 28px 0;font-weight:800;font-size:15px"><span>9:41</span><span style="font-size:12px;font-weight:600;white-space:nowrap">5G ▮▮▮</span></div>
+<div style="height:150px;flex:none;position:relative;background:repeating-linear-gradient(135deg,#416a59 0 12px,#73a24e 12px 24px);border-bottom:2px solid #39395f"><div style="position:absolute;left:20px;top:10px;width:38px;height:38px;background:#f5eec2;border:2px solid #39395f;display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#39395f" stroke-width="2.5" stroke-linecap="square"><path d="m15 18-6-6 6-6"/></svg></div></div>
+<div style="padding:16px 20px 0"><div style="font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#416a59">in 33 Tagen</div>
+<h1 style="font-size:32px;margin:4px 0 10px;line-height:1.05">Geburtstags-Brunch Lena</h1>
+<div style="display:flex;gap:16px;font-size:13px;font-weight:600"><span>So, 23. Nov · 10:00</span><span>{{ guests }} Gäste</span><span>Bei Mira, Zürich</span></div></div>
+<div style="margin:18px 20px 0;display:flex;border:2px solid #39395f"><sc-for list="{{ tabsHub }}" as="t" hint-placeholder-count="3"><div style="flex:1;padding:9px 12px;font-weight:800;font-size:14px;border-left:{{ t.bl }};background:{{ t.bg }};color:{{ t.fg }}">{{ t.label }}</div></sc-for></div>
+<div style="padding:18px 20px 0;display:flex;flex-direction:column;gap:12px">
+<div style="border:2px solid #39395f;background:#fbf7df;padding:14px 16px;display:flex;gap:14px;align-items:center"><div style="width:44px;height:44px;background:#a9c25d;border:2px solid #39395f;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#39395f" stroke-width="2" stroke-linecap="square"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><div style="flex:1"><div style="font-weight:800;font-size:17px">Ablauf</div><div style="font-size:13px">6 Punkte · als Nächstes 08:30 Einkauf abholen</div></div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#39395f" stroke-width="2.5" stroke-linecap="square"><path d="m9 18 6-6-6-6"/></svg></div>
+<div style="border:2px solid #39395f;background:#fbf7df;padding:14px 16px;display:flex;gap:14px;align-items:center"><div style="width:44px;height:44px;background:#73a24e;border:2px solid #39395f;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#39395f" stroke-width="2" stroke-linecap="square"><path d="M4 3h16v18H4zM8 8h8M8 12h8M8 16h5"/></svg></div><div style="flex:1"><div style="font-weight:800;font-size:17px">Rezepte</div><div style="font-size:13px">5 Rezepte · Frühstück bis Nachspeise</div></div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#39395f" stroke-width="2.5" stroke-linecap="square"><path d="m9 18 6-6-6-6"/></svg></div>
+<div style="border:2px solid #39395f;background:#fbf7df;padding:14px 16px"><div style="display:flex;gap:14px;align-items:center"><div style="width:44px;height:44px;background:#416a59;border:2px solid #39395f;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f5eec2" stroke-width="2" stroke-linecap="square"><path d="M3 4h3l3 12h10l2-8H7"/><circle cx="10" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg></div><div style="flex:1"><div style="font-weight:800;font-size:17px">Einkauf</div><div style="font-size:13px">{{ doneCount }} von {{ totalCount }} erledigt</div></div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#39395f" stroke-width="2.5" stroke-linecap="square"><path d="m9 18 6-6-6-6"/></svg></div>
+<div style="margin-top:12px;height:10px;border:2px solid #39395f;background:#f5eec2"><div style="height:100%;width:{{ progress }};background:#416a59"></div></div></div>
+</div>
+</div></div></div>
+
+<!-- 1c Ablauf -->
+<div class="dv-opt" id="1c"><div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Ablaufplan (Timeline)</div>
+<div style="width:410px;height:832px;background:#39395f;border-radius:52px;padding:10px;box-sizing:border-box">
+<div style="width:100%;height:100%;background:#f5eec2;border-radius:42px;overflow:hidden;position:relative;display:flex;flex-direction:column;font-family:Archivo,sans-serif;color:#39395f">
+<div style="height:46px;flex:none;display:flex;justify-content:space-between;align-items:center;padding:6px 28px 0;font-weight:800;font-size:15px"><span>9:41</span><span style="font-size:12px;font-weight:600;white-space:nowrap">5G ▮▮▮</span></div>
+<div style="padding:8px 20px 0;display:flex;align-items:center;gap:10px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#39395f" stroke-width="2.5" stroke-linecap="square"><path d="m15 18-6-6 6-6"/></svg><div style="font-weight:800;font-size:18px">Geburtstags-Brunch Lena</div></div>
+<div style="margin:14px 20px 0;display:flex;border:2px solid #39395f"><sc-for list="{{ tabsAblauf }}" as="t" hint-placeholder-count="3"><div style="flex:1;padding:9px 12px;font-weight:800;font-size:14px;border-left:{{ t.bl }};background:{{ t.bg }};color:{{ t.fg }}">{{ t.label }}</div></sc-for></div>
+<div style="padding:18px 20px 6px;display:flex;justify-content:space-between;align-items:baseline"><h3 style="margin:0;font-size:22px">So, 23. November</h3><span style="font-size:12px;font-weight:600;color:#5a5a7a">Wisch = bearbeiten</span></div>
+<div style="flex:1;overflow:hidden;padding:6px 20px 0">
+<sc-for list="{{ timeline }}" as="it" hint-placeholder-count="6">
+<div style="display:flex;min-height:84px">
+<div style="width:50px;flex:none;font-weight:800;font-size:16px;padding-top:1px">{{ it.time }}</div>
+<div style="width:26px;flex:none;position:relative"><div style="position:absolute;left:5px;top:4px;width:12px;height:12px;background:{{ it.dot }};border:2px solid #39395f;z-index:1"></div><div style="position:absolute;left:10px;top:8px;bottom:-8px;width:2px;background:#39395f"></div></div>
+<div style="flex:1;padding-bottom:14px;position:relative">
+<sc-if value="{{ it.swiped }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;right:0;top:0;bottom:14px;width:136px;display:flex"><div style="flex:1;background:#416a59;color:#f5eec2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:11px;font-weight:800;border:2px solid #39395f"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M12 20h9M16.5 3.5l4 4L8 20l-5 1 1-5z"/></svg>Ändern</div><div style="flex:1;background:#b5533c;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:11px;font-weight:800;border:2px solid #39395f;border-left:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M3 6h18M8 6V4h8v2M6 6l1 15h10l1-15"/></svg>Löschen</div></div></sc-if>
+<div style="border:2px solid #39395f;background:#fbf7df;padding:10px 12px;margin-right:{{ it.mr }};position:relative;display:flex;align-items:center;gap:10px"><div style="flex:1"><div style="font-weight:800;font-size:15px;line-height:1.2">{{ it.title }}</div><div style="font-size:12px;margin-top:3px;color:#5a5a7a">{{ it.note }}</div></div><div style="width:30px;height:30px;flex:none;background:{{ it.whoBg }};color:{{ it.whoFg }};border:2px solid #39395f;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800">{{ it.who }}</div></div>
+</div></div>
+</sc-for>
+</div>
+<div style="position:absolute;right:20px;bottom:24px;width:60px;height:60px;background:#416a59;color:#f5eec2;display:flex;align-items:center;justify-content:center;border:2px solid #39395f;box-shadow:4px 4px 0 #39395f"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"><path d="M12 5v14M5 12h14"/></svg></div>
+</div></div></div>
+
+<!-- 1d Rezepte -->
+<div class="dv-opt" id="1d"><div class="dv-olabel"><a class="dv-oid" href="#1d">1d</a>Rezepte nach Gang</div>
+<div style="width:410px;height:832px;background:#39395f;border-radius:52px;padding:10px;box-sizing:border-box">
+<div style="width:100%;height:100%;background:#f5eec2;border-radius:42px;overflow:hidden;position:relative;display:flex;flex-direction:column;font-family:Archivo,sans-serif;color:#39395f">
+<div style="height:46px;flex:none;display:flex;justify-content:space-between;align-items:center;padding:6px 28px 0;font-weight:800;font-size:15px"><span>9:41</span><span style="font-size:12px;font-weight:600;white-space:nowrap">5G ▮▮▮</span></div>
+<div style="padding:8px 20px 0;display:flex;align-items:center;gap:10px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#39395f" stroke-width="2.5" stroke-linecap="square"><path d="m15 18-6-6 6-6"/></svg><div style="font-weight:800;font-size:18px">Geburtstags-Brunch Lena</div></div>
+<div style="margin:14px 20px 0;display:flex;border:2px solid #39395f"><sc-for list="{{ tabsRezepte }}" as="t" hint-placeholder-count="3"><div style="flex:1;padding:9px 12px;font-weight:800;font-size:14px;border-left:{{ t.bl }};background:{{ t.bg }};color:{{ t.fg }}">{{ t.label }}</div></sc-for></div>
+<div style="flex:1;overflow:hidden;padding:4px 20px 0">
+<sc-for list="{{ groups }}" as="g" hint-placeholder-count="3">
+<div style="margin-top:18px"><div style="display:flex;align-items:center;gap:10px;border-bottom:2px solid #39395f;padding-bottom:6px"><h4 style="margin:0;font-size:18px;flex:1">{{ g.gang }}</h4><span style="font-size:12px;font-weight:600">{{ g.count }}</span></div>
+<sc-for list="{{ g.recipes }}" as="r" hint-placeholder-count="1">
+<div style="display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(57,57,95,.35)"><div style="width:52px;height:52px;flex:none;border:2px solid #39395f;background:{{ r.cover }}"></div><div style="flex:1"><div style="font-weight:800;font-size:16px;line-height:1.2">{{ r.name }}</div><div style="display:flex;align-items:center;gap:10px;margin-top:5px"><span style="font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;background:#a9c25d;padding:2px 7px">{{ g.gang }}</span><span style="font-size:12px;font-weight:600">{{ r.portions }} Portionen</span></div></div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#39395f" stroke-width="2.5" stroke-linecap="square"><path d="m9 18 6-6-6-6"/></svg></div>
+</sc-for></div>
+</sc-for>
+</div>
+<div style="position:absolute;right:20px;bottom:24px;width:60px;height:60px;background:#416a59;color:#f5eec2;display:flex;align-items:center;justify-content:center;border:2px solid #39395f;box-shadow:4px 4px 0 #39395f"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"><path d="M12 5v14M5 12h14"/></svg></div>
+</div></div></div>
+
+<!-- 1e Rezept-Detail -->
+<div class="dv-opt" id="1e"><div class="dv-olabel"><a class="dv-oid" href="#1e">1e</a>Rezept-Detail</div>
+<div style="width:410px;height:832px;background:#39395f;border-radius:52px;padding:10px;box-sizing:border-box">
+<div style="width:100%;height:100%;background:#f5eec2;border-radius:42px;overflow:hidden;position:relative;display:flex;flex-direction:column;font-family:Archivo,sans-serif;color:#39395f">
+<div style="height:46px;flex:none;display:flex;justify-content:space-between;align-items:center;padding:6px 28px 0;font-weight:800;font-size:15px"><span>9:41</span><span style="font-size:12px;font-weight:600;white-space:nowrap">5G ▮▮▮</span></div>
+<div style="height:112px;flex:none;position:relative;background:repeating-linear-gradient(135deg,#a9c25d 0 12px,#f5eec2 12px 24px);border-bottom:2px solid #39395f"><div style="position:absolute;left:20px;top:10px;width:38px;height:38px;background:#f5eec2;border:2px solid #39395f;display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#39395f" stroke-width="2.5" stroke-linecap="square"><path d="m15 18-6-6 6-6"/></svg></div></div>
+<div style="padding:16px 20px 0"><span style="font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;background:#a9c25d;padding:2px 7px">Brunch</span>
+<h1 style="font-size:34px;margin:8px 0 6px;line-height:1.05">Shakshuka</h1>
+<div style="display:flex;gap:16px;font-size:13px;font-weight:600"><span>{{ guests }} Portionen</span><span>35 Min.</span><span>vegetarisch</span></div></div>
+<div style="padding:14px 20px 0"><div style="border-top:2px solid #39395f;display:flex;justify-content:space-between;align-items:center;padding-top:10px"><h5 style="margin:0;font-size:17px">Zutaten</h5><span style="font-size:12px;font-weight:600;background:#416a59;color:#fff;padding:3px 8px">skaliert auf {{ guests }} Gäste</span></div>
+<div style="margin-top:6px"><sc-for list="{{ shakshuka }}" as="z" hint-placeholder-count="7"><div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(57,57,95,.35);font-size:14px"><span>{{ z.n }}</span><b>{{ z.q }}</b></div></sc-for></div></div>
+<div style="padding:16px 20px 0;flex:1;overflow:hidden"><div style="border-top:2px solid #39395f;padding-top:10px"><h5 style="margin:0 0 6px;font-size:17px">Zubereitung</h5>
+<sc-for list="{{ steps }}" as="s" hint-placeholder-count="3"><div style="display:flex;gap:12px;padding:5px 0;font-size:14px;line-height:1.4"><b style="color:#416a59;width:20px;flex:none">{{ s.n }}</b><span>{{ s.t }}</span></div></sc-for></div></div>
+</div></div></div>
+
+<!-- 1f Einkauf -->
+<div class="dv-opt" id="1f"><div class="dv-olabel"><a class="dv-oid" href="#1f">1f</a>Einkaufsliste</div>
+<div style="width:410px;height:832px;background:#39395f;border-radius:52px;padding:10px;box-sizing:border-box">
+<div style="width:100%;height:100%;background:#f5eec2;border-radius:42px;overflow:hidden;position:relative;display:flex;flex-direction:column;font-family:Archivo,sans-serif;color:#39395f">
+<div style="height:46px;flex:none;display:flex;justify-content:space-between;align-items:center;padding:6px 28px 0;font-weight:800;font-size:15px"><span>9:41</span><span style="font-size:12px;font-weight:600;white-space:nowrap">5G ▮▮▮</span></div>
+<div style="padding:8px 20px 0;display:flex;align-items:center;gap:10px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#39395f" stroke-width="2.5" stroke-linecap="square"><path d="m15 18-6-6 6-6"/></svg><div style="font-weight:800;font-size:18px">Geburtstags-Brunch Lena</div></div>
+<div style="margin:14px 20px 0;display:flex;border:2px solid #39395f"><sc-for list="{{ tabsEinkauf }}" as="t" hint-placeholder-count="3"><div style="flex:1;padding:9px 12px;font-weight:800;font-size:14px;border-left:{{ t.bl }};background:{{ t.bg }};color:{{ t.fg }}">{{ t.label }}</div></sc-for></div>
+<div style="margin:14px 20px 0;background:#416a59;color:#f5eec2;border:2px solid #39395f;padding:13px 14px;display:flex;align-items:center;gap:10px;font-weight:800;font-size:15px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/></svg><span style="flex:1">Aus Rezepten generieren</span><span style="font-size:12px;font-weight:600;background:#a9c25d;color:#39395f;padding:2px 7px">{{ guests }} Gäste</span></div>
+<div style="padding:8px 20px 0;display:flex;align-items:center;gap:10px"><div style="flex:1;height:10px;border:2px solid #39395f;background:#fbf7df"><div style="height:100%;width:{{ progress }};background:#416a59"></div></div><span style="font-size:12px;font-weight:800">{{ doneCount }}/{{ totalCount }}</span></div>
+<div style="flex:1;overflow:hidden;padding:0 20px">
+<sc-for list="{{ cats }}" as="c" hint-placeholder-count="3">
+<div style="margin-top:14px"><div style="display:flex;justify-content:space-between;align-items:center;background:#39395f;color:#f5eec2;padding:5px 10px;font-size:12px;font-weight:800;letter-spacing:.07em;text-transform:uppercase"><span>{{ c.name }}</span><span>{{ c.progress }}</span></div>
+<sc-for list="{{ c.items }}" as="i" hint-placeholder-count="3">
+<div onClick="{{ i.toggle }}" style="display:flex;align-items:center;gap:12px;padding:8px 2px;border-bottom:1px solid rgba(57,57,95,.35);cursor:pointer;opacity:{{ i.op }}"><div style="width:22px;height:22px;flex:none;border:2px solid #39395f;background:{{ i.bg }};display:flex;align-items:center;justify-content:center;color:#f5eec2"><sc-if value="{{ i.done }}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square"><path d="M20 6 9 17l-5-5"/></svg></sc-if></div><span style="flex:1;font-size:15px;font-weight:600;text-decoration:{{ i.deco }}">{{ i.name }}</span><span style="font-size:13px;font-weight:800">{{ i.q }}</span></div>
+</sc-for></div>
+</sc-for>
+</div>
+<div style="position:absolute;right:20px;bottom:24px;width:60px;height:60px;background:#416a59;color:#f5eec2;display:flex;align-items:center;justify-content:center;border:2px solid #39395f;box-shadow:4px 4px 0 #39395f"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"><path d="M12 5v14M5 12h14"/></svg></div>
+</div></div></div>
+</div>
+
+<div class="dv-sub">Web-App · 4 Screens</div>
+<div class="dv-opts">
+
+<!-- 1g Web Dashboard -->
+<div class="dv-opt" id="1g"><div class="dv-olabel"><a class="dv-oid" href="#1g">1g</a>Event-Übersicht</div>
+<div style="width:1200px;height:760px;display:flex;background:#f5eec2;border:2px solid #39395f;font-family:Archivo,sans-serif;color:#39395f;overflow:hidden">
+<div style="width:232px;flex:none;border-right:2px solid #39395f;display:flex;flex-direction:column;background:#fbf7df">
+<div style="padding:20px;display:flex;align-items:center;gap:8px;border-bottom:2px solid #39395f"><div style="width:30px;height:30px;background:#416a59;color:#f5eec2;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px">H</div><span style="font-weight:800;font-size:20px;letter-spacing:-.01em">HostPilot</span></div>
+<div style="padding:16px 20px 8px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#5a5a7a">Events</div>
+<div style="flex:1"><div style="padding:10px 20px;background:#39395f;color:#f5eec2;font-weight:800;font-size:14px">Alle Events</div>
+<sc-for list="{{ events }}" as="ev" hint-placeholder-count="3"><div style="padding:10px 20px;font-size:14px;font-weight:600;border-bottom:1px solid rgba(57,57,95,.25)">{{ ev.title }}</div></sc-for></div>
+<div style="padding:20px;border-top:2px solid #39395f;display:flex;align-items:center;gap:10px"><div style="width:34px;height:34px;border:2px solid #39395f;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px">MK</div><div style="font-size:13px;font-weight:600;line-height:1.2">Mira Keller<br><span style="color:#5a5a7a;font-weight:400">Gastgeberin</span></div></div></div>
+<div style="flex:1;display:flex;flex-direction:column;min-width:0">
+<div style="padding:28px 36px 20px;display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid #39395f"><div><div style="font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#416a59">3 Events geplant</div><h1 style="margin:4px 0 0;font-size:44px;line-height:1">Deine Events</h1></div>
+<div style="display:flex;gap:12px;align-items:center"><div style="display:flex;border:2px solid #39395f"><div style="padding:9px 16px;background:#39395f;color:#f5eec2;font-weight:800;font-size:14px">Anstehend</div><div style="padding:9px 16px;font-weight:600;font-size:14px;border-left:2px solid #39395f">Vergangen</div></div><div style="background:#416a59;color:#f5eec2;border:2px solid #39395f;padding:10px 18px;font-weight:800;font-size:14px;display:flex;align-items:center;gap:8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"><path d="M12 5v14M5 12h14"/></svg>Neues Event</div></div></div>
+<div style="padding:28px 36px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px">
+<sc-for list="{{ events }}" as="ev" hint-placeholder-count="3">
+<div style="border:2px solid #39395f;background:#fbf7df"><div style="height:130px;position:relative;background:{{ ev.cover }}"><span style="position:absolute;left:0;top:0;background:#39395f;color:#f5eec2;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:6px 10px">{{ ev.when }}</span><span style="position:absolute;right:8px;bottom:8px;font-size:11px;font-weight:600;background:#f5eec2;padding:1px 6px">Cover-Bild</span></div>
+<div style="padding:16px 18px 18px;border-top:2px solid #39395f"><div style="font-weight:800;font-size:22px;letter-spacing:-.015em;line-height:1.15">{{ ev.title }}</div>
+<div style="display:flex;gap:18px;margin-top:12px;font-size:14px;font-weight:600"><span style="display:flex;align-items:center;gap:6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><rect x="3" y="4" width="18" height="18"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>{{ ev.date }}</span><span style="display:flex;align-items:center;gap:6px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><circle cx="9" cy="8" r="4"/><path d="M2 21v-2a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v2"/></svg>{{ ev.guests }} Gäste</span></div></div></div>
+</sc-for>
+<div style="border:2px dashed #39395f;min-height:300px;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:18px;gap:10px"><div style="width:44px;height:44px;background:#416a59;color:#f5eec2;display:flex;align-items:center;justify-content:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"><path d="M12 5v14M5 12h14"/></svg></div><div style="font-weight:800;font-size:18px">Neues Event erstellen</div></div>
+</div></div></div></div>
+
+<!-- 1h Web Ablauf -->
+<div class="dv-opt" id="1h"><div class="dv-olabel"><a class="dv-oid" href="#1h">1h</a>Event-Detail · Ablauf</div>
+<div style="width:1200px;height:760px;display:flex;background:#f5eec2;border:2px solid #39395f;font-family:Archivo,sans-serif;color:#39395f;overflow:hidden">
+<div style="width:232px;flex:none;border-right:2px solid #39395f;display:flex;flex-direction:column;background:#fbf7df">
+<div style="padding:20px;display:flex;align-items:center;gap:8px;border-bottom:2px solid #39395f"><div style="width:30px;height:30px;background:#416a59;color:#f5eec2;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px">H</div><span style="font-weight:800;font-size:20px;letter-spacing:-.01em">HostPilot</span></div>
+<div style="padding:16px 20px 8px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#5a5a7a">Events</div>
+<div style="flex:1"><sc-for list="{{ eventsNav }}" as="ev" hint-placeholder-count="3"><div style="padding:10px 20px;font-size:14px;font-weight:{{ ev.fw }};background:{{ ev.bg }};color:{{ ev.fg }};border-bottom:1px solid rgba(57,57,95,.25)">{{ ev.title }}</div></sc-for></div></div>
+<div style="flex:1;display:flex;flex-direction:column;min-width:0">
+<div style="padding:24px 36px 0;border-bottom:2px solid #39395f"><div style="font-size:13px;font-weight:600;color:#5a5a7a">Events / Geburtstags-Brunch Lena</div>
+<div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:6px"><h1 style="margin:0;font-size:38px;line-height:1.05">Geburtstags-Brunch Lena</h1><div style="font-size:14px;font-weight:600;display:flex;gap:20px;padding-bottom:6px"><span>So, 23. Nov · 10:00</span><span>{{ guests }} Gäste</span><span>Bei Mira, Zürich</span></div></div>
+<div style="display:flex;gap:28px;margin-top:20px"><sc-for list="{{ wTabsAblauf }}" as="t" hint-placeholder-count="3"><div style="padding:8px 2px 10px;font-weight:800;font-size:16px;border-bottom:{{ t.bd }};color:{{ t.fg }};margin-bottom:-2px">{{ t.label }}</div></sc-for></div></div>
+<div style="flex:1;display:flex;min-height:0">
+<div style="flex:1;padding:24px 36px;overflow:hidden">
+<sc-for list="{{ timeline }}" as="it" hint-placeholder-count="6">
+<div style="display:flex;min-height:80px"><div style="width:64px;flex:none;font-weight:800;font-size:18px">{{ it.time }}</div><div style="width:30px;flex:none;position:relative"><div style="position:absolute;left:6px;top:4px;width:14px;height:14px;background:{{ it.dot }};border:2px solid #39395f;z-index:1"></div><div style="position:absolute;left:12px;top:10px;bottom:-10px;width:2px;background:#39395f"></div></div>
+<div style="flex:1;padding-bottom:14px"><div style="border:2px solid #39395f;background:#fbf7df;padding:11px 14px;display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-weight:800;font-size:16px">{{ it.title }}</div><div style="font-size:13px;margin-top:2px;color:#5a5a7a">{{ it.note }}</div></div><div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600"><div style="width:30px;height:30px;background:{{ it.whoBg }};color:{{ it.whoFg }};border:2px solid #39395f;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800">{{ it.who }}</div>{{ it.whoName }}</div><div style="display:flex;gap:6px;color:#39395f"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M12 20h9M16.5 3.5l4 4L8 20l-5 1 1-5z"/></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#b5533c" stroke-width="2" stroke-linecap="square"><path d="M3 6h18M8 6V4h8v2M6 6l1 15h10l1-15"/></svg></div></div></div></div>
+</sc-for></div>
+<div style="width:300px;flex:none;border-left:2px solid #39395f;background:#fbf7df;padding:24px;display:flex;flex-direction:column;gap:14px">
+<h4 style="margin:0;font-size:20px">Neuer Programmpunkt</h4>
+<div><div style="font-size:12px;font-weight:800;margin-bottom:4px">Uhrzeit</div><div style="border:2px solid #39395f;background:#f5eec2;padding:9px 10px;font-size:14px">14:30</div></div>
+<div><div style="font-size:12px;font-weight:800;margin-bottom:4px">Titel</div><div style="border:2px solid #39395f;background:#f5eec2;padding:9px 10px;font-size:14px;color:#5a5a7a">z. B. Brunch aufräumen</div></div>
+<div><div style="font-size:12px;font-weight:800;margin-bottom:4px">Verantwortlich</div><div style="display:flex;gap:6px"><div style="width:34px;height:34px;background:#416a59;color:#f5eec2;border:2px solid #39395f;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800">MK</div><div style="width:34px;height:34px;border:2px solid #39395f;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800">JB</div><div style="width:34px;height:34px;border:2px solid #39395f;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800">TS</div><div style="width:34px;height:34px;border:2px dashed #39395f;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800">+</div></div></div>
+<div style="background:#416a59;color:#f5eec2;border:2px solid #39395f;padding:11px 14px;font-weight:800;font-size:14px">Hinzufügen</div>
+<div style="margin-top:auto;border-top:2px solid #39395f;padding-top:12px;font-size:13px;line-height:1.4">6 Punkte · 08:30 – 13:30<br><span style="color:#5a5a7a">Verantwortliche sehen ihre Punkte in der App.</span></div></div>
+</div></div></div></div>
+
+<!-- 1i Web Rezepte -->
+<div class="dv-opt" id="1i"><div class="dv-olabel"><a class="dv-oid" href="#1i">1i</a>Event-Detail · Rezepte</div>
+<div style="width:1200px;height:760px;display:flex;background:#f5eec2;border:2px solid #39395f;font-family:Archivo,sans-serif;color:#39395f;overflow:hidden">
+<div style="width:232px;flex:none;border-right:2px solid #39395f;display:flex;flex-direction:column;background:#fbf7df">
+<div style="padding:20px;display:flex;align-items:center;gap:8px;border-bottom:2px solid #39395f"><div style="width:30px;height:30px;background:#416a59;color:#f5eec2;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px">H</div><span style="font-weight:800;font-size:20px;letter-spacing:-.01em">HostPilot</span></div>
+<div style="padding:16px 20px 8px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#5a5a7a">Events</div>
+<div style="flex:1"><sc-for list="{{ eventsNav }}" as="ev" hint-placeholder-count="3"><div style="padding:10px 20px;font-size:14px;font-weight:{{ ev.fw }};background:{{ ev.bg }};color:{{ ev.fg }};border-bottom:1px solid rgba(57,57,95,.25)">{{ ev.title }}</div></sc-for></div></div>
+<div style="flex:1;display:flex;flex-direction:column;min-width:0">
+<div style="padding:24px 36px 0;border-bottom:2px solid #39395f"><div style="font-size:13px;font-weight:600;color:#5a5a7a">Events / Geburtstags-Brunch Lena</div>
+<div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:6px"><h1 style="margin:0;font-size:38px;line-height:1.05">Geburtstags-Brunch Lena</h1><div style="font-size:14px;font-weight:600;display:flex;gap:20px;padding-bottom:6px"><span>So, 23. Nov · 10:00</span><span>{{ guests }} Gäste</span><span>Bei Mira, Zürich</span></div></div>
+<div style="display:flex;gap:28px;margin-top:20px"><sc-for list="{{ wTabsRezepte }}" as="t" hint-placeholder-count="3"><div style="padding:8px 2px 10px;font-weight:800;font-size:16px;border-bottom:{{ t.bd }};color:{{ t.fg }};margin-bottom:-2px">{{ t.label }}</div></sc-for></div></div>
+<div style="flex:1;display:flex;min-height:0">
+<div style="flex:1;padding:8px 36px 24px;overflow:hidden">
+<sc-for list="{{ groups }}" as="g" hint-placeholder-count="4">
+<div style="margin-top:18px"><div style="display:flex;align-items:center;border-bottom:2px solid #39395f;padding-bottom:6px"><h4 style="margin:0;font-size:18px;flex:1">{{ g.gang }}</h4><span style="font-size:12px;font-weight:600">{{ g.count }}</span></div>
+<sc-for list="{{ g.recipes }}" as="r" hint-placeholder-count="1"><div style="display:flex;gap:14px;align-items:center;padding:9px 10px;border-bottom:1px solid rgba(57,57,95,.35);background:{{ r.sel }}"><div style="width:44px;height:44px;flex:none;border:2px solid #39395f;background:{{ r.cover }}"></div><div style="flex:1;font-weight:800;font-size:16px">{{ r.name }}</div><span style="font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;background:#a9c25d;padding:2px 7px">{{ g.gang }}</span><span style="font-size:13px;font-weight:600;width:96px;text-align:right">{{ r.portions }} Portionen</span></div></sc-for></div>
+</sc-for></div>
+<div style="width:380px;flex:none;border-left:2px solid #39395f;background:#fbf7df;display:flex;flex-direction:column">
+<div style="height:110px;background:repeating-linear-gradient(135deg,#a9c25d 0 12px,#f5eec2 12px 24px);border-bottom:2px solid #39395f"></div>
+<div style="padding:18px 24px 0"><span style="font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;background:#a9c25d;padding:2px 7px">Brunch</span><h2 style="margin:8px 0 4px;font-size:30px">Shakshuka</h2><div style="font-size:13px;font-weight:600">{{ guests }} Portionen · 35 Min. · vegetarisch</div></div>
+<div style="padding:14px 24px 0"><div style="border-top:2px solid #39395f;padding-top:8px;display:flex;justify-content:space-between;align-items:center"><h5 style="margin:0;font-size:16px">Zutaten</h5><span style="font-size:12px;font-weight:600;background:#416a59;color:#fff;padding:3px 8px">für {{ guests }} Gäste</span></div>
+<sc-for list="{{ shakshuka }}" as="z" hint-placeholder-count="7"><div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(57,57,95,.35);font-size:14px"><span>{{ z.n }}</span><b>{{ z.q }}</b></div></sc-for></div>
+<div style="padding:14px 24px 0"><div style="border-top:2px solid #39395f;padding-top:8px"><h5 style="margin:0 0 4px;font-size:16px">Zubereitung</h5>
+<sc-for list="{{ steps }}" as="s" hint-placeholder-count="3"><div style="display:flex;gap:10px;padding:3px 0;font-size:13px;line-height:1.35"><b style="color:#416a59;width:16px;flex:none">{{ s.n }}</b><span>{{ s.t }}</span></div></sc-for></div></div>
+</div></div></div></div></div>
+
+<!-- 1j Web Einkauf -->
+<div class="dv-opt" id="1j"><div class="dv-olabel"><a class="dv-oid" href="#1j">1j</a>Event-Detail · Einkauf</div>
+<div style="width:1200px;height:760px;display:flex;background:#f5eec2;border:2px solid #39395f;font-family:Archivo,sans-serif;color:#39395f;overflow:hidden">
+<div style="width:232px;flex:none;border-right:2px solid #39395f;display:flex;flex-direction:column;background:#fbf7df">
+<div style="padding:20px;display:flex;align-items:center;gap:8px;border-bottom:2px solid #39395f"><div style="width:30px;height:30px;background:#416a59;color:#f5eec2;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px">H</div><span style="font-weight:800;font-size:20px;letter-spacing:-.01em">HostPilot</span></div>
+<div style="padding:16px 20px 8px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#5a5a7a">Events</div>
+<div style="flex:1"><sc-for list="{{ eventsNav }}" as="ev" hint-placeholder-count="3"><div style="padding:10px 20px;font-size:14px;font-weight:{{ ev.fw }};background:{{ ev.bg }};color:{{ ev.fg }};border-bottom:1px solid rgba(57,57,95,.25)">{{ ev.title }}</div></sc-for></div></div>
+<div style="flex:1;display:flex;flex-direction:column;min-width:0">
+<div style="padding:24px 36px 0;border-bottom:2px solid #39395f"><div style="font-size:13px;font-weight:600;color:#5a5a7a">Events / Geburtstags-Brunch Lena</div>
+<div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:6px"><h1 style="margin:0;font-size:38px;line-height:1.05">Geburtstags-Brunch Lena</h1><div style="font-size:14px;font-weight:600;display:flex;gap:20px;padding-bottom:6px"><span>So, 23. Nov · 10:00</span><span>{{ guests }} Gäste</span><span>Bei Mira, Zürich</span></div></div>
+<div style="display:flex;gap:28px;margin-top:20px"><sc-for list="{{ wTabsEinkauf }}" as="t" hint-placeholder-count="3"><div style="padding:8px 2px 10px;font-weight:800;font-size:16px;border-bottom:{{ t.bd }};color:{{ t.fg }};margin-bottom:-2px">{{ t.label }}</div></sc-for></div></div>
+<div style="padding:20px 36px;display:flex;align-items:center;gap:20px;border-bottom:2px solid #39395f;background:#fbf7df">
+<div style="display:flex;align-items:center;gap:12px"><span style="font-size:13px;font-weight:800">Gäste</span><div style="display:flex;border:2px solid #39395f"><div style="width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px">−</div><div style="width:48px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;border-left:2px solid #39395f;border-right:2px solid #39395f;background:#f5eec2">{{ guests }}</div><div style="width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px">+</div></div></div>
+<div style="background:#416a59;color:#f5eec2;border:2px solid #39395f;padding:10px 18px;font-weight:800;font-size:14px;display:flex;align-items:center;gap:8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/></svg>Aus Rezepten generieren</div>
+<div style="font-size:13px;line-height:1.35;flex:1">Fasst Zutaten aus 5 Rezepten zusammen,<br>Mengen skaliert auf {{ guests }} Gäste.</div>
+<div style="width:260px"><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:800;margin-bottom:4px"><span>Erledigt</span><span>{{ doneCount }}/{{ totalCount }}</span></div><div style="height:12px;border:2px solid #39395f;background:#f5eec2"><div style="height:100%;width:{{ progress }};background:#416a59"></div></div></div></div>
+<div style="flex:1;padding:8px 36px 20px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:32px;align-content:start;overflow:hidden">
+<sc-for list="{{ cats }}" as="c" hint-placeholder-count="5">
+<div style="margin-top:14px"><div style="display:flex;justify-content:space-between;align-items:center;background:#39395f;color:#f5eec2;padding:6px 12px;font-size:12px;font-weight:800;letter-spacing:.07em;text-transform:uppercase"><span>{{ c.name }}</span><span>{{ c.progress }}</span></div>
+<sc-for list="{{ c.items }}" as="i" hint-placeholder-count="3"><div onClick="{{ i.toggle }}" style="display:flex;align-items:center;gap:12px;padding:8px 2px;border-bottom:1px solid rgba(57,57,95,.35);cursor:pointer;opacity:{{ i.op }}"><div style="width:22px;height:22px;flex:none;border:2px solid #39395f;background:{{ i.bg }};display:flex;align-items:center;justify-content:center;color:#f5eec2"><sc-if value="{{ i.done }}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="square"><path d="M20 6 9 17l-5-5"/></svg></sc-if></div><span style="flex:1;font-size:15px;font-weight:600;text-decoration:{{ i.deco }}">{{ i.name }}</span><span style="font-size:13px;font-weight:800">{{ i.q }}</span></div></sc-for></div>
+</sc-for></div>
+</div></div></div>
+</div>
+<p class="dv-next">Nächste Schritte: «mehr Fotos statt Muster-Platzhalter» · «Dunkelmodus» · «Dialog für Rezept → Einkaufsliste zuordnen» · «Tablet-Layout»</p>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;guests&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:12,&quot;min&quot;:4,&quot;max&quot;:30,&quot;step&quot;:1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Event&quot;},&quot;showSwipe&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Ablaufplan&quot;}}">
+class Component extends DCLogic {
+  state = { done: { zw: true, pe: true, ei: true, but: true, pel: true, sirup: false } };
+  toggle(id) { this.setState(s => ({ done: { ...s.done, [id]: !s.done[id] } })); }
+  renderVals() {
+    const g = Math.max(2, Math.round(this.props.guests ?? 12));
+    const showSwipe = this.props.showSwipe ?? true;
+    const fmt = (a, u) => {
+      const v = a * g / 12;
+      if (u === 'g') return v >= 1000 ? (+(v / 1000).toFixed(1)) + ' kg' : Math.max(10, Math.round(v / 10) * 10) + ' g';
+      if (u === 'ml') return v >= 1000 ? (+(v / 1000).toFixed(1)) + ' l' : Math.round(v / 10) * 10 + ' ml';
+      return Math.ceil(v - 1e-9) + ' ' + u;
+    };
+    const stripe = (a, b) => `repeating-linear-gradient(135deg,${a} 0 12px,${b} 12px 24px)`;
+    const events = [
+      { title: 'Geburtstags-Brunch Lena', when: 'in 33 Tagen', date: 'So, 23. Nov', guests: g, cover: stripe('#416a59', '#73a24e') },
+      { title: 'Raclette-Abend', when: 'in 24 Tagen', date: 'Fr, 14. Nov', guests: 8, cover: stripe('#39395f', '#416a59') },
+      { title: 'Weihnachtsessen Familie', when: 'in 65 Tagen', date: 'Do, 25. Dez', guests: 12, cover: stripe('#a9c25d', '#f5eec2') }
+    ].sort((a, b) => a.when === 'in 24 Tagen' ? -1 : b.when === 'in 24 Tagen' ? 1 : 0);
+    const eventsNav = events.map(e => { const a = e.title.startsWith('Geburts'); return { title: e.title, bg: a ? '#39395f' : 'transparent', fg: a ? '#f5eec2' : '#39395f', fw: a ? 800 : 600 }; });
+    const seg = act => ['Ablauf', 'Rezepte', 'Einkauf'].map((l, i) => ({ label: l, bg: l === act ? '#39395f' : 'transparent', fg: l === act ? '#f5eec2' : '#39395f', bl: i ? '2px solid #39395f' : '0' }));
+    const wtab = act => ['Ablauf', 'Rezepte', 'Einkauf'].map(l => ({ label: l, bd: l === act ? '4px solid #416a59' : '4px solid transparent', fg: l === act ? '#39395f' : '#5a5a7a' }));
+    const P = { MK: ['#416a59', '#f5eec2', 'Mira'], JB: ['#a9c25d', '#39395f', 'Jonas'], TS: ['#39395f', '#f5eec2', 'Tim'], AL: ['#f5eec2', '#39395f', 'Alle'] };
+    const tl = [
+      ['08:30', 'Einkauf abholen, Tisch eindecken', 'Bäckerei Frei, Markt', 'MK'],
+      ['09:30', 'Zopf aufbacken, Shakshuka ansetzen', 'Ofen auf 180 °C', 'JB'],
+      ['10:00', 'Gäste kommen · Aperitif', 'Holunder-Spritz', 'MK'],
+      ['10:30', 'Brunch-Buffet eröffnen', 'Warmes zuerst', 'AL'],
+      ['12:00', 'Torte & Kerzen', 'Überraschung für Lena', 'TS'],
+      ['13:30', 'Kaffee & Spiele', 'Spielekiste aus dem Keller', 'AL']
+    ].map((t, i) => ({ time: t[0], title: t[1], note: t[2], who: t[3], whoBg: P[t[3]][0], whoFg: P[t[3]][1], whoName: P[t[3]][2], dot: i === 2 ? '#416a59' : '#f5eec2', swiped: showSwipe && i === 2, mr: showSwipe && i === 2 ? '132px' : '0' }));
+    const rc = [stripe('#73a24e', '#f5eec2'), stripe('#416a59', '#a9c25d'), stripe('#a9c25d', '#39395f'), stripe('#39395f', '#a9c25d'), stripe('#f5eec2', '#73a24e')];
+    const groups = [
+      ['Frühstück', [['Birchermüesli mit Beeren', 0]]],
+      ['Aperitif', [['Holunder-Spritz', 1]]],
+      ['Brunch', [['Shakshuka', 2], ['Rührei mit Kräutern', 3]]],
+      ['Nachspeise', [['Zitronen-Tarte', 4]]]
+    ].map(([gang, rs]) => ({ gang, count: rs.length + (rs.length > 1 ? ' Rezepte' : ' Rezept'), recipes: rs.map(([name, c]) => ({ name, portions: g, cover: rc[c], sel: name === 'Shakshuka' ? '#a9c25d55' : 'transparent' })) }));
+    const shakshuka = [['Eier', 12, 'Stk'], ['Pelati', 1600, 'g'], ['Zwiebeln', 4, 'Stk'], ['Peperoni', 6, 'Stk'], ['Knoblauchzehen', 6, 'Stk'], ['Kreuzkümmel', 4, 'TL'], ['Feta', 400, 'g']].map(([n, a, u]) => ({ n, q: fmt(a, u) }));
+    const steps = ['Zwiebeln, Peperoni und Knoblauch in Olivenöl weich dünsten.', 'Gewürze und Pelati zugeben, 15 Min. köcheln lassen.', 'Mulden formen, Eier hineingleiten lassen, zugedeckt stocken lassen.', 'Mit Feta und Kräutern servieren.'].map((t, i) => ({ n: i + 1, t }));
+    const raw = [
+      ['Obst & Gemüse', [['zw', 'Zwiebeln', 4, 'Stk'], ['pe', 'Peperoni', 6, 'Stk'], ['be', 'Beeren', 1200, 'g']]],
+      ['Milch & Eier', [['ei', 'Eier', 36, 'Stk'], ['fe', 'Feta', 400, 'g'], ['but', 'Butter', 500, 'g']]],
+      ['Gewürze & Vorrat', [['pel', 'Pelati', 1600, 'g'], ['ku', 'Kreuzkümmel', 4, 'TL']]],
+      ['Getränke', [['sirup', 'Holunderblütensirup', 1000, 'ml'], ['pro', 'Prosecco', 6, 'Fl.']]]
+    ];
+    let total = 0, dn = 0;
+    const cats = raw.map(([name, its]) => {
+      const items = its.map(([id, n, a, u]) => {
+        const d = !!this.state.done[id]; total++; if (d) dn++;
+        return { name: n, q: fmt(a, u), done: d, bg: d ? '#416a59' : '#fbf7df', op: d ? 0.55 : 1, deco: d ? 'line-through' : 'none', toggle: () => this.toggle(id) };
+      });
+      return { name, items, progress: items.filter(i => i.done).length + '/' + items.length };
+    });
+    return {
+      guests: g, events, eventsNav, timeline: tl, groups, shakshuka, steps, cats,
+      doneCount: dn, totalCount: total, progress: Math.round(dn / total * 100) + '%',
+      tabsHub: seg(null), tabsAblauf: seg('Ablauf'), tabsRezepte: seg('Rezepte'), tabsEinkauf: seg('Einkauf'),
+      wTabsAblauf: wtab('Ablauf'), wTabsRezepte: wtab('Rezepte'), wTabsEinkauf: wtab('Einkauf')
+    };
+  }
+}
+</script>
+</body>
+</html>
