@@ -132,6 +132,11 @@ class DatabaseSeeder extends Seeder
             'name' => 'Geburtstagskerzen', 'amount' => 1, 'unit' => 'Pck.',
             'category' => 'Sonstiges', 'done' => false, 'source' => 'manual',
         ]);
+
+        $event->topics()->createMany([
+            ['title' => 'Sommerferien gemeinsam planen', 'notes' => "Wer hat wann frei?\nTessin oder Engadin?"],
+            ['title' => 'Geschenk für Lena', 'notes' => 'Sammeln für das Velo – wer macht mit?'],
+        ]);
     }
 
     private function raclette(User $host, Carbon $date, ShoppingListGenerator $generator): void

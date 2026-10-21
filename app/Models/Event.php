@@ -89,6 +89,12 @@ class Event extends Model
         return $this->hasMany(ShoppingItem::class)->orderBy('name');
     }
 
+    /** @return HasMany<Topic, $this> */
+    public function topics(): HasMany
+    {
+        return $this->hasMany(Topic::class)->orderBy('id');
+    }
+
     /** @return HasMany<Person, $this> */
     public function people(): HasMany
     {

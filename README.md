@@ -39,6 +39,7 @@ Demo-Login: `mira@hostpilot.test` / `password`
 - Ablaufplan: Timeline, Verantwortliche, Wisch/Long-Press → Ändern/Löschen
 - Rezepte nach Gang, Zutaten mit den Originalmengen des Rezepts (keine automatische Umrechnung)
 - Einkaufsliste: «Aus Rezepten generieren» (summiert gleiche Zutaten, behält manuelle Einträge und Haken), Live-Abhaken
+- Themen: beliebig viele Gesprächsthemen pro Event mit Überschrift und Notizen (anlegen, bearbeiten, löschen)
 
 ## Entwicklung
 

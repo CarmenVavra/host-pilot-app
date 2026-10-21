@@ -10,6 +10,7 @@ use App\Http\Controllers\PersonController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\ShoppingItemController;
+use App\Http\Controllers\TopicController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -59,5 +60,10 @@ Route::middleware('auth')->group(function () {
         Route::post('einkauf/generieren', [ShoppingItemController::class, 'generate'])->name('shopping.generate');
         Route::patch('einkauf/{shoppingItem}/erledigt', [ShoppingItemController::class, 'toggle'])->name('shopping.toggle');
         Route::delete('einkauf/{shoppingItem}', [ShoppingItemController::class, 'destroy'])->name('shopping.destroy');
+
+        Route::resource('themen', TopicController::class)
+            ->except('show')
+            ->parameters(['themen' => 'topic'])
+            ->names('topics');
     });
 });

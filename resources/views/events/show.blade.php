@@ -12,6 +12,12 @@
         }
         $recipeSub = ($recipeCount === 1 ? '1 Rezept' : $recipeCount.' Rezepte')
             .($event->courseRangeLabel() ? ' · '.$event->courseRangeLabel() : '');
+        $topicCount = $event->topics->count();
+        $topicSub = match (true) {
+            $topicCount === 0 => 'Noch keine Themen',
+            $topicCount === 1 => '1 Thema · '.$event->topics->first()->title,
+            default => $topicCount.' Themen · '.$event->topics->first()->title.' …',
+        };
     @endphp
 
     {{-- Phone: cover with back button, title and meta --}}
@@ -34,6 +40,7 @@
             <a class="segmented__item" href="{{ route('events.agenda.index', $event) }}">Ablauf</a>
             <a class="segmented__item" href="{{ route('events.recipes.index', $event) }}">Rezepte</a>
             <a class="segmented__item" href="{{ route('events.shopping.index', $event) }}">Einkauf</a>
+            <a class="segmented__item" href="{{ route('events.topics.index', $event) }}">Themen</a>
         </nav>
     </div>
 
@@ -71,11 +78,21 @@
             </div>
             <x-progress :done="$doneCount" :total="$totalCount" />
         </a>
+        <a class="hub-card" href="{{ route('events.topics.index', $event) }}">
+            <div class="hub-card__row">
+                <span class="hub-card__icon hub-card__icon--indigo"><x-icon name="message" :size="22" /></span>
+                <span class="hub-card__text">
+                    <span class="hub-card__title">Themen</span>
+                    <span class="hub-card__sub">{{ $topicSub }}</span>
+                </span>
+                <x-icon name="chevron-right" :stroke="2.5" />
+            </div>
+        </a>
     </div>
 
     <div class="event-actions">
         <a class="btn btn--ghost" href="{{ route('events.edit', $event) }}"><x-icon name="pencil" :size="18" />Event bearbeiten</a>
-        <form method="POST" action="{{ route('events.destroy', $event) }}" data-confirm="Event «{{ $event->title }}» mit Ablauf, Rezepten und Einkaufsliste löschen?">
+        <form method="POST" action="{{ route('events.destroy', $event) }}" data-confirm="Event «{{ $event->title }}» mit Ablauf, Rezepten, Einkaufsliste und Themen löschen?">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn--danger"><x-icon name="trash" :size="18" />Event löschen</button>

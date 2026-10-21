@@ -49,7 +49,7 @@ class EventController extends Controller
     {
         Gate::authorize('view', $event);
 
-        $event->load(['agendaItems', 'recipes', 'shoppingItems']);
+        $event->load(['agendaItems', 'recipes', 'shoppingItems', 'topics']);
 
         $nextItem = $event->nextAgendaItem();
         $doneCount = $event->shoppingItems->where('done', true)->count();

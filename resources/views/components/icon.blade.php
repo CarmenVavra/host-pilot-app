@@ -18,6 +18,7 @@
         @case('check')<path d="M20 6 9 17l-5-5"/>@break
         @case('map-pin')<path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/>@break
         @case('logout')<path d="M9 21H4V3h5M16 17l5-5-5-5M21 12H9"/>@break
+        @case('message')<path d="M3 4h18v13H9l-6 4z"/><path d="M7 9h10M7 13h6"/>@break
         @case('x')<path d="M18 6 6 18M6 6l12 12"/>@break
     @endswitch
 </svg>

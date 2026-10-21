@@ -4,6 +4,7 @@
         'ablauf' => ['Ablauf', route('events.agenda.index', $event)],
         'rezepte' => ['Rezepte', route('events.recipes.index', $event)],
         'einkauf' => ['Einkauf', route('events.shopping.index', $event)],
+        'themen' => ['Themen', route('events.topics.index', $event)],
     ];
 @endphp
 

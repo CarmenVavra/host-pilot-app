@@ -22,7 +22,7 @@ class ConfirmDialogTest extends TestCase
             ->assertSee('<dialog class="confirm" id="confirm-dialog"', false)
             ->assertSee('aria-labelledby="confirm-title"', false)
             ->assertSee('Abbrechen')
-            ->assertSee('data-confirm="Event «Brunch» mit Ablauf, Rezepten und Einkaufsliste löschen?"', false);
+            ->assertSee('data-confirm="Event «Brunch» mit Ablauf, Rezepten, Einkaufsliste und Themen löschen?"', false);
     }
 
     public function test_delete_forms_ask_for_confirmation(): void
