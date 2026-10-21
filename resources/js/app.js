@@ -5,13 +5,45 @@
 
 const csrfToken = () => document.querySelector('meta[name="csrf-token"]')?.content ?? '';
 
-/* Confirmation before destructive actions: <form data-confirm="…"> */
+/* Confirmation before destructive actions: <form data-confirm="…"> opens #confirm-dialog */
 function initConfirm() {
+    const dialog = document.querySelector('[data-confirm-dialog]');
+    if (!dialog || typeof dialog.showModal !== 'function') return;
+
+    const message = dialog.querySelector('[data-confirm-message]');
+    const accept = dialog.querySelector('[data-confirm-accept]');
+    let pendingForm = null;
+    let opener = null;
+
     document.addEventListener('submit', (event) => {
         const form = event.target.closest('form[data-confirm]');
-        if (form && !window.confirm(form.dataset.confirm)) {
-            event.preventDefault();
+        if (!form) return;
+        event.preventDefault();
+
+        pendingForm = form;
+        opener = event.submitter ?? document.activeElement;
+        message.textContent = form.dataset.confirm;
+        accept.textContent = form.dataset.confirmButton || 'Löschen';
+        dialog.returnValue = '';
+        dialog.showModal();
+    });
+
+    // Click on the backdrop cancels.
+    dialog.addEventListener('click', (event) => {
+        if (event.target === dialog) dialog.close('cancel');
+    });
+
+    dialog.addEventListener('close', () => {
+        const form = pendingForm;
+        pendingForm = null;
+
+        if (dialog.returnValue === 'confirm' && form) {
+            // Native submit() skips the submit event, so the dialog does not reopen.
+            HTMLFormElement.prototype.submit.call(form);
+            return;
         }
+
+        opener?.focus?.();
     });
 }
 

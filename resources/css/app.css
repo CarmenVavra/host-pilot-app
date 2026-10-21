@@ -1607,6 +1607,101 @@ textarea {
     display: flex;
 }
 
+/* ---------- Confirm dialog ---------- */
+
+.confirm {
+    width: min(440px, calc(100vw - 2 * var(--gutter)));
+    max-width: none;
+    padding: 0;
+    border: var(--line);
+    background: var(--paper);
+    color: var(--indigo);
+    box-shadow: 6px 6px 0 var(--indigo);
+}
+
+.confirm::backdrop {
+    background: rgba(57, 57, 95, 0.55);
+}
+
+.confirm[open] {
+    animation: confirm-in 0.15s ease-out;
+}
+
+@keyframes confirm-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+}
+
+.confirm__inner {
+    padding: 20px;
+    margin: 0;
+}
+
+.confirm__head {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+}
+
+.confirm__icon {
+    width: 44px;
+    height: 44px;
+    flex: none;
+    border: var(--line);
+    background: var(--terra);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.confirm__kicker {
+    color: var(--terra);
+}
+
+.confirm__title {
+    font-size: 20px;
+    line-height: 1.2;
+    margin-top: 2px;
+    overflow-wrap: break-word;
+}
+
+.confirm__text {
+    margin: 14px 0 0;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.confirm__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: var(--line);
+}
+
+/* Phone: dialog as a bottom sheet with full-width buttons */
+@media (max-width: 599.98px) {
+    .confirm {
+        width: 100%;
+        margin: auto 0 0;
+        border-width: 2px 0 0;
+        box-shadow: none;
+    }
+
+    .confirm__inner {
+        padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    }
+
+    .confirm__actions .btn {
+        flex: 1;
+        justify-content: center;
+    }
+}
+
 /* ---------- Tablet (phone layout, more room) ---------- */
 
 @media (min-width: 600px) {
