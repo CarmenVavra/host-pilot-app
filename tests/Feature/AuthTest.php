@@ -52,6 +52,51 @@ class AuthTest extends TestCase
         $this->assertGuest();
     }
 
+    public function test_registration_page_renders_all_fields(): void
+    {
+        $this->get(route('register'))
+            ->assertStatus(200)
+            ->assertSee('name="name"', false)
+            ->assertSee('name="email"', false)
+            ->assertSee('name="password"', false)
+            ->assertSee('name="password_confirmation"', false);
+    }
+
+    public function test_registration_requires_unique_email_ignoring_case(): void
+    {
+        User::factory()->create(['email' => 'mira@example.com']);
+
+        $this->post(route('register'), [
+            'name' => 'Mira Zwei',
+            'email' => 'Mira@Example.com',
+            'password' => 'geheim-1234',
+            'password_confirmation' => 'geheim-1234',
+        ])->assertSessionHasErrors(['email' => 'E-Mail ist bereits vergeben.']);
+
+        $this->assertGuest();
+        $this->assertDatabaseCount('users', 1);
+    }
+
+    public function test_registration_stores_email_in_lower_case(): void
+    {
+        $this->post(route('register'), [
+            'name' => 'Jonas',
+            'email' => ' Jonas@Example.COM ',
+            'password' => 'geheim-1234',
+            'password_confirmation' => 'geheim-1234',
+        ])->assertRedirect(route('events.index'));
+
+        $this->assertDatabaseHas('users', ['email' => 'jonas@example.com']);
+    }
+
+    public function test_registration_requires_all_fields(): void
+    {
+        $this->post(route('register'), [])
+            ->assertSessionHasErrors(['name', 'email', 'password']);
+
+        $this->assertGuest();
+    }
+
     public function test_user_can_login_and_logout(): void
     {
         $user = User::factory()->create();

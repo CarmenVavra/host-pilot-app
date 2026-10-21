@@ -20,6 +20,16 @@ class LoginRequest extends FormRequest
     }
 
     /**
+     * E-mail addresses are stored in lower case so uniqueness ignores case.
+     */
+    protected function prepareForValidation(): void
+    {
+        if (is_string($this->input('email'))) {
+            $this->merge(['email' => Str::lower(trim($this->input('email')))]);
+        }
+    }
+
+    /**
      * @return array<string, mixed>
      */
     public function rules(): array
