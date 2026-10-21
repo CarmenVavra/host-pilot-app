@@ -10,15 +10,14 @@ final readonly class ShoppingListGenerationResult
     public function __construct(
         public int $ingredients,
         public int $recipes,
-        public int $guests,
     ) {}
 
-    /** «32 Zutaten aus 5 Rezepten für 12 Gäste» */
+    /** «32 Zutaten aus 5 Rezepten» */
     public function message(): string
     {
         $ingredients = $this->ingredients === 1 ? '1 Zutat' : "{$this->ingredients} Zutaten";
         $recipes = $this->recipes === 1 ? '1 Rezept' : "{$this->recipes} Rezepten";
 
-        return "{$ingredients} aus {$recipes} für {$this->guests} Gäste";
+        return "{$ingredients} aus {$recipes}";
     }
 }

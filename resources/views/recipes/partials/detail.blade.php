@@ -9,7 +9,7 @@
         <span class="tag">{{ $recipe->courseEnum()->value }}</span>
         <h2 class="recipe-detail__title" id="recipe-title">{{ $recipe->title }}</h2>
         <div class="meta">
-            <span>{{ $event->guests }} Portionen</span>
+            <span>{{ $recipe->portions }} {{ $recipe->portions === 1 ? 'Portion' : 'Portionen' }}</span>
             @if ($recipe->duration_label)<span>{{ $recipe->duration_label }}</span>@endif
             @if ($recipe->diet)<span>{{ $recipe->diet }}</span>@endif
         </div>
@@ -18,19 +18,16 @@
     <section class="recipe-section" aria-labelledby="ingredients-title">
         <div class="recipe-section__head">
             <h3 id="ingredients-title">Zutaten</h3>
-            <span class="badge-forest">skaliert auf {{ $event->guests }} Gäste</span>
+            <span class="badge-forest">für {{ $recipe->portions }} {{ $recipe->portions === 1 ? 'Portion' : 'Portionen' }}</span>
         </div>
         @if ($recipe->ingredients->isEmpty())
             <p class="muted">Noch keine Zutaten erfasst.</p>
         @else
             <ul class="ingredients">
                 @foreach ($recipe->ingredients as $ingredient)
-                    <li><span>{{ $ingredient->name }}</span><b>{{ $ingredient->scaledLabel($recipe->portions, $event->guests) }}</b></li>
+                    <li><span>{{ $ingredient->name }}</span><b>{{ $ingredient->quantityLabel() }}</b></li>
                 @endforeach
             </ul>
-        @endif
-        @if ($recipe->portions !== $event->guests)
-            <p class="field__help">Originalrezept für {{ $recipe->portions }} Portionen.</p>
         @endif
     </section>
 

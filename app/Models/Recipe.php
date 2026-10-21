@@ -12,8 +12,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * A recipe assigned to an event. Ingredient amounts refer to `portions`
- * and are scaled to the event's number of guests for display and shopping.
+ * A recipe assigned to an event. Ingredient amounts refer to `portions` and
+ * are always used as entered – the host adjusts quantities themselves.
  *
  * @property int $id
  * @property int $event_id

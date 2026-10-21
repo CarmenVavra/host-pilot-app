@@ -36,13 +36,6 @@ class QuantityTest extends TestCase
         $this->assertSame($expected, Quantity::format($amount, $unit));
     }
 
-    public function test_scales_from_portions_to_guests(): void
-    {
-        $this->assertSame(24.0, Quantity::scale(12, 6, 12));
-        $this->assertSame(3.0, Quantity::scale(4, 4, 3));
-        $this->assertNull(Quantity::scale(null, 4, 8));
-    }
-
     public function test_normalizes_large_units(): void
     {
         $this->assertSame([1500.0, 'g'], Quantity::normalize(1.5, 'kg'));

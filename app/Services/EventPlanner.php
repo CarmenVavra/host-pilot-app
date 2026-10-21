@@ -13,10 +13,7 @@ use Illuminate\Support\Facades\DB;
  */
 class EventPlanner
 {
-    public function __construct(
-        private readonly CoverImageStore $covers,
-        private readonly ShoppingListGenerator $shopping,
-    ) {}
+    public function __construct(private readonly CoverImageStore $covers) {}
 
     /**
      * Creates the event and the default helpers: the host and «Alle».
@@ -45,23 +42,11 @@ class EventPlanner
      */
     public function update(Event $event, array $data, ?UploadedFile $cover, bool $removeCover): Event
     {
-        $guestsChanged = (int) $data['guests'] !== $event->guests;
-
         $event->fill($this->attributes($data));
         $event->cover_path = $this->covers->replace($cover, $event->cover_path, 'events', $removeCover);
         $event->save();
 
-        if ($guestsChanged) {
-            $this->shopping->refreshIfGenerated($event);
-        }
-
         return $event;
-    }
-
-    public function changeGuests(Event $event, int $guests): void
-    {
-        $event->update(['guests' => $guests]);
-        $this->shopping->refreshIfGenerated($event);
     }
 
     public function delete(Event $event): void

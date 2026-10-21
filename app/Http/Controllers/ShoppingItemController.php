@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ShoppingItemRequest;
-use App\Http\Requests\UpdateGuestsRequest;
 use App\Models\Event;
 use App\Models\ShoppingItem;
-use App\Services\EventPlanner;
 use App\Services\ShoppingListGenerator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -84,15 +82,5 @@ class ShoppingItemController extends Controller
         $result = $generator->generate($event);
 
         return redirect()->route('events.shopping.index', $event)->with('status', $result->message());
-    }
-
-    /**
-     * Guest stepper: rescales the generated list to the new number of guests.
-     */
-    public function updateGuests(UpdateGuestsRequest $request, Event $event, EventPlanner $planner): RedirectResponse
-    {
-        $planner->changeGuests($event, (int) $request->validated('guests'));
-
-        return redirect()->route('events.shopping.index', $event)->with('status', "Mengen für {$event->guests} Gäste berechnet.");
     }
 }

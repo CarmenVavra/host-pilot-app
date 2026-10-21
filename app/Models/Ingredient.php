@@ -40,10 +40,10 @@ class Ingredient extends Model
     }
 
     /**
-     * The formatted amount, scaled from the recipe's portions to the given number of guests.
+     * The formatted amount as entered in the recipe («1.6 kg», «4 Stk»).
      */
-    public function scaledLabel(int $portions, int $guests): string
+    public function quantityLabel(): string
     {
-        return Quantity::format(Quantity::scale($this->amount, $portions, $guests), $this->unit);
+        return Quantity::format($this->amount, $this->unit);
     }
 }

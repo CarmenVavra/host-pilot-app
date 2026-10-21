@@ -1462,57 +1462,6 @@ textarea {
     margin-left: 4px;
 }
 
-/* Guest stepper */
-.stepper {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.stepper__label {
-    font-size: 13px;
-    font-weight: 800;
-}
-
-.stepper__control {
-    display: flex;
-    border: var(--line);
-}
-
-.stepper__btn {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: 0;
-    font-weight: 800;
-    font-size: 18px;
-    cursor: pointer;
-}
-
-.stepper__btn:hover {
-    background: var(--creme-dark);
-}
-
-.stepper__value {
-    width: 52px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: 16px;
-    border-left: var(--line);
-    border-right: var(--line);
-    background: var(--creme);
-}
-
-.m-stepper {
-    padding: 12px var(--gutter) 0;
-}
-
 /* ---------- Auth & profile ---------- */
 
 .auth {

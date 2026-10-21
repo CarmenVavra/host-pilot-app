@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 /**
  * Builds an event's shopping list from the ingredients of its recipes.
  *
- * - Amounts are scaled from each recipe's portions to the event's guests.
+ * - Amounts are taken unchanged from the recipes (no scaling to guests).
  * - Equal ingredients (same name and base unit) are summed up.
  * - Manually added entries and existing check marks are preserved.
  * - Recipe entries that no longer occur in any recipe are removed unless
@@ -28,8 +28,7 @@ class ShoppingListGenerator
 
         foreach ($event->recipes as $recipe) {
             foreach ($recipe->ingredients as $ingredient) {
-                $scaled = Quantity::scale($ingredient->amount, $recipe->portions, $event->guests);
-                [$amount, $unit] = Quantity::normalize($scaled, $ingredient->unit);
+                [$amount, $unit] = Quantity::normalize($ingredient->amount, $ingredient->unit);
                 $key = self::key($ingredient->name, $unit);
 
                 if (isset($totals[$key])) {
@@ -81,19 +80,7 @@ class ShoppingListGenerator
         return new ShoppingListGenerationResult(
             ingredients: count($totals),
             recipes: $event->recipes->count(),
-            guests: $event->guests,
         );
-    }
-
-    /**
-     * Regenerates the list only if it already contains generated entries,
-     * e.g. after the number of guests changed.
-     */
-    public function refreshIfGenerated(Event $event): void
-    {
-        if ($event->shoppingItems()->where('source', ShoppingItem::SOURCE_RECIPE)->exists()) {
-            $this->generate($event);
-        }
     }
 
     private static function key(string $name, string $unit): string

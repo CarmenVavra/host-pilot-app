@@ -26,18 +26,6 @@ final class Quantity
         };
     }
 
-    /**
-     * Scales an amount from the recipe's portions to the number of guests.
-     */
-    public static function scale(?float $amount, int $portions, int $guests): ?float
-    {
-        if ($amount === null) {
-            return null;
-        }
-
-        return $amount * $guests / max(1, $portions);
-    }
-
     public static function format(?float $amount, ?string $unit): string
     {
         if ($amount === null || $amount <= 0) {

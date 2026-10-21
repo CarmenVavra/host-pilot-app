@@ -42,16 +42,16 @@ class ShoppingTest extends TestCase
         return $this->event->shoppingItems()->where('name', $name)->firstOrFail();
     }
 
-    public function test_generation_sums_and_scales_ingredients(): void
+    public function test_generation_sums_original_amounts_without_scaling(): void
     {
         $this->actingAs($this->user)->post(route('events.shopping.generate', $this->event))
             ->assertRedirect(route('events.shopping.index', $this->event))
-            ->assertSessionHas('status', '3 Zutaten aus 2 Rezepten für 12 Gäste');
+            ->assertSessionHas('status', '3 Zutaten aus 2 Rezepten');
 
-        // 12 (Shakshuka, 12 portions) + 12 × 12/6 (Rührei) = 36 eggs
-        $this->assertSame(36.0, $this->item('Eier')->amount);
-        // 0.05 kg × 2 = 100 g, normalised to grams
-        $this->assertSame(100.0, $this->item('Butter')->amount);
+        // 12 (Shakshuka) + 12 (Rührei) = 24 eggs – guests and portions do not change amounts
+        $this->assertSame(24.0, $this->item('Eier')->amount);
+        // 0.05 kg, normalised to grams
+        $this->assertSame(50.0, $this->item('Butter')->amount);
         $this->assertSame('g', $this->item('Butter')->unit);
         $this->assertSame(3, $this->event->shoppingItems()->count());
     }
@@ -65,7 +65,7 @@ class ShoppingTest extends TestCase
         $this->actingAs($this->user)->post(route('events.shopping.generate', $this->event));
 
         $this->assertTrue($this->item('Eier')->done);
-        $this->assertSame(36.0, $this->item('Eier')->amount);
+        $this->assertSame(24.0, $this->item('Eier')->amount);
         $this->assertSame(ShoppingItem::SOURCE_MANUAL, $this->item('Servietten')->source);
         $this->assertSame(4, $this->event->shoppingItems()->count());
     }
@@ -92,9 +92,10 @@ class ShoppingTest extends TestCase
         $this->actingAs($this->user)->get(route('events.shopping.index', $this->event))
             ->assertStatus(200)
             ->assertSeeInOrder(['Milch &amp; Eier', 'Butter', 'Eier', 'Gewürze &amp; Vorrat', 'Pelati'], false)
-            ->assertSee('36 Stk')
+            ->assertSee('24 Stk')
             ->assertSee('1.6 kg')
-            ->assertSee('100 g')
+            ->assertSee('50 g')
+            ->assertDontSee('skaliert')
             ->assertSee('Aus Rezepten generieren')
             ->assertSee('1/2');
     }
@@ -142,16 +143,20 @@ class ShoppingTest extends TestCase
         ])->assertSessionHasErrors(['name', 'category']);
     }
 
-    public function test_changing_guests_rescales_generated_list(): void
+    public function test_changing_guests_does_not_change_amounts(): void
     {
         $this->actingAs($this->user)->post(route('events.shopping.generate', $this->event));
 
-        $this->actingAs($this->user)->patch(route('events.guests.update', $this->event), ['guests' => 6])
-            ->assertRedirect(route('events.shopping.index', $this->event));
+        $this->actingAs($this->user)->put(route('events.update', $this->event), [
+            'title' => $this->event->title,
+            'date' => '2026-12-01',
+            'guests' => 3,
+        ])->assertRedirect(route('events.show', $this->event));
 
-        $this->assertSame(6, $this->event->fresh()->guests);
-        // 12 × 6/12 + 12 × 6/6 = 18 eggs
-        $this->assertSame(18.0, $this->item('Eier')->amount);
+        $this->actingAs($this->user)->post(route('events.shopping.generate', $this->event));
+
+        $this->assertSame(3, $this->event->fresh()->guests);
+        $this->assertSame(24.0, $this->item('Eier')->amount);
     }
 
     public function test_foreign_hosts_cannot_change_the_list(): void
@@ -161,7 +166,6 @@ class ShoppingTest extends TestCase
 
         $this->actingAs($other)->post(route('events.shopping.generate', $this->event))->assertForbidden();
         $this->actingAs($other)->patchJson(route('events.shopping.toggle', [$this->event, $item]))->assertForbidden();
-        $this->actingAs($other)->patch(route('events.guests.update', $this->event), ['guests' => 2])->assertForbidden();
 
         $this->assertFalse($item->fresh()->done);
     }

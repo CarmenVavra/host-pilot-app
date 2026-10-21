@@ -34,7 +34,7 @@
                                         <span class="recipe-row__name">{{ $recipe->title }}</span>
                                         <span class="recipe-row__meta">
                                             <span class="tag">{{ $course }}</span>
-                                            <span class="recipe-row__portions">{{ $event->guests }} Portionen</span>
+                                            <span class="recipe-row__portions">{{ $recipe->portions }} {{ $recipe->portions === 1 ? 'Portion' : 'Portionen' }}</span>
                                         </span>
                                     </span>
                                     <x-icon name="chevron-right" :size="18" :stroke="2.5" class="icon recipe-row__chevron" />

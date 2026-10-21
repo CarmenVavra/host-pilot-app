@@ -37,8 +37,8 @@ Demo-Login: `mira@hostpilot.test` / `password`
 - Registrierung, Login, Passwort vergessen/zurücksetzen (Mail-Treiber `log` → `storage/logs/laravel.log`), Passwort ändern im Profil
 - Events (anstehend/vergangen), Cover-Foto-Upload, Gästezahl
 - Ablaufplan: Timeline, Verantwortliche, Wisch/Long-Press → Ändern/Löschen
-- Rezepte nach Gang, Zutaten skaliert auf die Gästezahl
-- Einkaufsliste: «Aus Rezepten generieren» (summiert + skaliert, behält manuelle Einträge und Haken), Live-Abhaken, Gäste-Stepper
+- Rezepte nach Gang, Zutaten mit den Originalmengen des Rezepts (keine automatische Umrechnung)
+- Einkaufsliste: «Aus Rezepten generieren» (summiert gleiche Zutaten, behält manuelle Einträge und Haken), Live-Abhaken
 
 ## Entwicklung
 

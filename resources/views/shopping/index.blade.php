@@ -14,14 +14,13 @@
 
     {{-- Web: toolbar --}}
     <div class="toolbar">
-        @include('shopping.partials.stepper', ['suffix' => 'web'])
         <form method="POST" action="{{ route('events.shopping.generate', $event) }}">
             @csrf
             <button type="submit" class="btn" @disabled(! $hasRecipes)><x-icon name="sparkle" :size="18" />Aus Rezepten generieren</button>
         </form>
         <div class="toolbar__text">
             @if ($hasRecipes)
-                Fasst Zutaten aus {{ $recipesLabel }} zusammen,<br>Mengen skaliert auf {{ $event->guests }} Gäste.
+                Fasst die Zutaten aus {{ $recipesLabel }} zusammen,<br>mit den Mengen aus den Rezepten.
             @else
                 Noch keine Rezepte – füge zuerst Rezepte hinzu.
             @endif
@@ -32,21 +31,19 @@
         </div>
     </div>
 
-    {{-- Phone: generate button, progress and stepper --}}
+    {{-- Phone: generate button and progress --}}
     <div class="only-mobile">
         <form class="generate" method="POST" action="{{ route('events.shopping.generate', $event) }}">
             @csrf
             <button type="submit" class="btn" @disabled(! $hasRecipes)>
                 <x-icon name="sparkle" />
                 <span class="generate__label">Aus Rezepten generieren</span>
-                <span class="chip">{{ $event->guests }} Gäste</span>
             </button>
         </form>
         <div class="shop-progress">
             <x-progress class="progress--paper" :done="$doneCount" :total="$totalCount" />
             <span><span data-shop-done>{{ $doneCount }}</span>/{{ $totalCount }}</span>
         </div>
-        <div class="m-stepper">@include('shopping.partials.stepper', ['suffix' => 'phone'])</div>
     </div>
 
     @if ($categories->isEmpty())

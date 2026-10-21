@@ -13,8 +13,7 @@
 
     <div class="form-grid form-grid--2">
         <x-input name="location" label="Ort" :value="$event->location" maxlength="120" placeholder="z. B. Bei Mira, Zürich" />
-        <x-input name="guests" label="Gäste" type="number" :value="$event->guests" required min="1" max="500" inputmode="numeric"
-                 help="Mengen in Rezepten und Einkaufsliste werden darauf skaliert." />
+        <x-input name="guests" label="Gäste" type="number" :value="$event->guests" required min="1" max="500" inputmode="numeric" />
     </div>
 
     <x-input name="cover" label="Cover-Bild (optional)" type="file" accept="image/*" help="JPG, PNG oder WebP, max. 5 MB. Ohne Bild wird ein Muster verwendet." />

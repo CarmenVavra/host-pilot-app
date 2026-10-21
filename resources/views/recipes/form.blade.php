@@ -53,8 +53,8 @@
 
             <div class="form-grid form-grid--2">
                 <x-select name="course" label="Gang" :options="$courses" :value="$recipe->course" required />
-                <x-input name="portions" label="Portionen (Originalrezept)" type="number" :value="$recipe->portions" required min="1" max="500" inputmode="numeric"
-                         help="Mengen werden auf die Gästezahl ({{ $event->guests }}) skaliert." />
+                <x-input name="portions" label="Portionen" type="number" :value="$recipe->portions" required min="1" max="500" inputmode="numeric"
+                         help="Für wie viele Portionen die Mengen im Rezept gedacht sind." />
             </div>
 
             <div class="form-grid form-grid--2">

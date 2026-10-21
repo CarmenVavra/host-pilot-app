@@ -32,7 +32,7 @@ class RecipeController extends Controller
     {
         Gate::authorize('update', $event);
 
-        $recipe = new Recipe(['portions' => $event->guests, 'course' => 'Hauptgang']);
+        $recipe = new Recipe(['portions' => 4, 'course' => 'Hauptgang']);
 
         return view('recipes.form', compact('event', 'recipe'));
     }

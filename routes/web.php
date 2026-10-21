@@ -59,6 +59,5 @@ Route::middleware('auth')->group(function () {
         Route::post('einkauf/generieren', [ShoppingItemController::class, 'generate'])->name('shopping.generate');
         Route::patch('einkauf/{shoppingItem}/erledigt', [ShoppingItemController::class, 'toggle'])->name('shopping.toggle');
         Route::delete('einkauf/{shoppingItem}', [ShoppingItemController::class, 'destroy'])->name('shopping.destroy');
-        Route::patch('gaeste', [ShoppingItemController::class, 'updateGuests'])->name('guests.update');
     });
 });

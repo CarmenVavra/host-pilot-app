@@ -33,11 +33,11 @@ class RecipeTest extends TestCase
         $this->actingAs($this->user)->get(route('events.recipes.index', $this->event))
             ->assertStatus(200)
             ->assertSeeInOrder(['Frühstück', 'Birchermüesli', 'Brunch', 'Shakshuka', 'Nachspeise', 'Zitronen-Tarte'])
-            ->assertSee('12 Portionen')
+            ->assertSee('4 Portionen')
             ->assertDontSee('Hauptgang');
     }
 
-    public function test_recipe_detail_scales_ingredients_to_guests(): void
+    public function test_recipe_detail_shows_original_amounts_independent_of_guests(): void
     {
         $recipe = Recipe::factory()->for($this->event)->create(['title' => 'Shakshuka', 'course' => 'Brunch', 'portions' => 6]);
         $recipe->ingredients()->createMany([
@@ -47,10 +47,11 @@ class RecipeTest extends TestCase
 
         $this->actingAs($this->user)->get(route('events.recipes.show', [$this->event, $recipe]))
             ->assertStatus(200)
-            ->assertSee('skaliert auf 12 Gäste')
-            ->assertSee('12 Stk')
-            ->assertSee('1.6 kg')
-            ->assertSee('Originalrezept für 6 Portionen');
+            ->assertSee('für 6 Portionen')
+            ->assertSee('6 Stk')
+            ->assertSee('800 g')
+            ->assertDontSee('12 Stk')
+            ->assertDontSee('skaliert');
     }
 
     public function test_recipe_can_be_created_with_ingredients_and_steps(): void
