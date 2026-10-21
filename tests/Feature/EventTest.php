@@ -31,6 +31,23 @@ class EventTest extends TestCase
             ->assertDontSee('Fremdes Event');
     }
 
+    public function test_guest_count_uses_singular_for_one_guest(): void
+    {
+        $user = User::factory()->create();
+        $single = Event::factory()->for($user)->create(['guests' => 1]);
+        Event::factory()->for($user)->create(['guests' => 12]);
+
+        $this->actingAs($user)->get(route('events.index'))
+            ->assertSee('1 Gast')
+            ->assertSee('12 Gäste')
+            ->assertDontSee('1 Gäste')
+            ->assertSee('Neues Event erstellen');
+
+        $this->actingAs($user)->get(route('events.show', $single))
+            ->assertSee('1 Gast')
+            ->assertDontSee('1 Gäste');
+    }
+
     public function test_overview_can_show_past_events(): void
     {
         $user = User::factory()->create();

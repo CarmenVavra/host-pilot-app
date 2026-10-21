@@ -35,6 +35,7 @@ use Illuminate\Support\Str;
  * @property-read string $short_date
  * @property-read string $medium_date
  * @property-read string $date_time_label
+ * @property-read string $guests_label
  * @property-read string|null $cover_url
  */
 class Event extends Model
@@ -150,6 +151,16 @@ class Event extends Model
     protected function mediumDate(): Attribute
     {
         return Attribute::get(fn () => GermanDate::medium($this->date));
+    }
+
+    /**
+     * «1 Gast» / «12 Gäste»
+     *
+     * @return Attribute<non-falsy-string, never>
+     */
+    protected function guestsLabel(): Attribute
+    {
+        return Attribute::get(fn (): string => $this->guests === 1 ? '1 Gast' : $this->guests.' Gäste');
     }
 
     /**

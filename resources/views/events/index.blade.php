@@ -57,7 +57,7 @@
                             <h2 class="event-card__title">{{ $item->title }}</h2>
                             <div class="meta">
                                 <span class="meta__item"><x-icon name="calendar" :size="16" />{{ $item->short_date }}</span>
-                                <span class="meta__item"><x-icon name="users" :size="16" />{{ $item->guests }} Gäste</span>
+                                <span class="meta__item"><x-icon name="users" :size="16" />{{ $item->guests_label }}</span>
                             </div>
                         </div>
                     </a>
@@ -65,8 +65,9 @@
             @endforeach
             <li class="only-desktop">
                 <a class="new-tile" href="{{ route('events.create') }}">
-                    <span class="new-tile__icon"><x-icon name="plus" :size="24" :stroke="2.5" /></span>
-                    Neues Event erstellen
+                    <span class="new-tile__icon"><x-icon name="plus" :size="26" :stroke="2.5" /></span>
+                    <span class="new-tile__title">Neues Event erstellen</span>
+                    <span class="new-tile__sub">Ablauf, Rezepte, Einkauf &amp; Themen planen</span>
                 </a>
             </li>
         </ul>

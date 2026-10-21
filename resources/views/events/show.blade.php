@@ -32,7 +32,7 @@
             <h1 class="h1 h1--event">{{ $event->title }}</h1>
             <div class="meta">
                 <span>{{ $event->date_time_label }}</span>
-                <span>{{ $event->guests }} Gäste</span>
+                <span>{{ $event->guests_label }}</span>
                 @if ($event->location)<span>{{ $event->location }}</span>@endif
             </div>
         </div>

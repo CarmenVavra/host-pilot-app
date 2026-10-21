@@ -588,32 +588,56 @@ textarea {
     margin-top: 8px;
 }
 
+/* «Neues Event erstellen»: as tall as the event cards in its row, content centred */
 .new-tile {
+    height: 100%;
+    min-height: 200px;
     border: 2px dashed var(--indigo);
-    min-height: 300px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 18px;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    padding: 24px 18px;
+    text-align: center;
     text-decoration: none;
-    font-weight: 800;
-    font-size: 18px;
+    color: var(--indigo);
+    transition: background-color 0.15s ease;
 }
 
 .new-tile:hover {
     background: var(--paper);
+    border-style: solid;
 }
 
 .new-tile__icon {
-    width: 44px;
-    height: 44px;
+    width: 52px;
+    height: 52px;
+    margin-bottom: 10px;
     background: var(--forest);
     color: var(--creme);
+    border: var(--line);
+    box-shadow: 4px 4px 0 var(--indigo);
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.new-tile:hover .new-tile__icon {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 var(--indigo);
+}
+
+.new-tile__title {
+    font-weight: 800;
+    font-size: 18px;
+}
+
+.new-tile__sub {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
 }
 
 .empty {
