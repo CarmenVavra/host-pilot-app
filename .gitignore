@@ -23,3 +23,6 @@ Homestead.json
 Homestead.yaml
 Thumbs.db
 /.claude
+
+# Upload-Paket (build-package.bat)
+/dist

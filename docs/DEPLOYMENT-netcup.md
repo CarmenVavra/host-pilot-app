@@ -13,30 +13,35 @@ deines Tarifs nicht sicher bin, steht **«prüfen»** dabei.
 - Das Webverzeichnis der Domain auf den Ordner **`public`** der App stellen (siehe Schritt 3).
 - Zugriff: **SSH** (praktisch, nicht in jedem Tarif – prüfen) oder **FTP/SFTP**.
 
-## 1. Lokal vorbereiten
+## 1. Upload-Paket erstellen
+
+Auf deinem Rechner im Projektordner:
 
 ```bash
-composer install --no-dev --optimize-autoloader
-npm ci
-npm run build
+build-package.bat
 ```
 
-- `vendor/` entsteht dabei lokal. Du lädst es mit hoch (oder führst `composer install` auf dem Server aus, falls SSH vorhanden ist).
-- `public/build/` (CSS, JS, Schrift) wird **nicht** in Git gespeichert und muss immer lokal gebaut und hochgeladen werden.
-- Zum Entwickeln danach wieder `composer install` ausführen, damit die Dev-Werkzeuge zurück sind.
+Das Skript (Doppelklick genügt) macht alles Nötige und verändert dein Entwicklungs-Projekt nicht:
 
-## 2. Dateien hochladen
+1. führt die Tests aus und bricht bei einem Fehler ab (mit `build-package.bat /skip-tests` überspringbar),
+2. baut das Frontend (`npm run build`),
+3. kopiert die Dateien in einen Arbeitsordner und lässt alles Überflüssige weg,
+4. installiert die PHP-Pakete **ohne** Entwickler-Werkzeuge (`composer install --no-dev`),
+5. prüft das Paket (keine `.env`, keine Datenbank, Frontend-Build und `vendor` vorhanden),
+6. erstellt `dist\hostpilot-upload-JJJJMMTT-HHMM.zip` (ca. 8 MB).
 
-Lade den gesamten Projektordner hoch, **ausser**:
+**Was im ZIP nicht enthalten ist:** `.env`, `database/*.sqlite`, `node_modules/`, `tests/`, `docs/`, `UI_Mockups/`,
+die Demo-Daten (`database/seeders`) und alle `.bat`-Dateien. Ein versehentliches `php artisan db:seed` auf dem Server scheitert
+deshalb mit einer Fehlermeldung, statt den Demo-User mit dem Passwort `password` anzulegen.
 
-| Nicht hochladen | Warum |
-|---|---|
-| `.env` | enthält lokale Einstellungen; auf dem Server entsteht eine eigene |
-| `node_modules/` | wird nur zum Bauen gebraucht |
-| `database/*.sqlite` | lokale Test-Datenbank mit Demo-Daten |
-| `tests/`, `UI_Mockups/`, `.git/`, `*.bat` | nur für die Entwicklung |
+## 2. ZIP hochladen
 
-Der Ordner `storage/` und `bootstrap/cache/` müssen vom Server **beschreibbar** sein (Rechte 775 bzw. 755/775, je nach Hoster – prüfen).
+1. Entpacke das ZIP lokal oder lade es hoch und entpacke es auf dem Server.
+2. Der **Inhalt** (nicht der Ordner `dist`) kommt in das Projektverzeichnis auf dem Webspace, z. B. `…/hostpilot/`.
+3. Prüfe, dass `storage/` und `bootstrap/cache/` vom Server **beschreibbar** sind (Rechte 775 bzw. 755/775, je nach Hoster, prüfen).
+
+**Updates:** Erzeuge ein neues Paket und überschreibe die Dateien auf dem Server. Deine Server-`.env` und der Ordner
+`storage/app/public` (hochgeladene Bilder) bleiben dabei bestehen, weil sie nicht im ZIP sind.
 
 ## 3. Webverzeichnis auf `public/` stellen
 
@@ -106,7 +111,7 @@ Nach jeder Änderung an `.env` oder an Routen vorher `php artisan optimize:clear
 - [ ] **«Passwort vergessen»** getestet: Die E-Mail kommt an und der Link funktioniert
 - [ ] Event mit Cover-Bild angelegt, das Bild wird angezeigt
 - [ ] «Konto löschen» mit einem Test-Konto getestet
-- [ ] Kein Demo-User vorhanden (`mira@hostpilot.test` darf nicht existieren)
+- [ ] Kein Demo-User vorhanden (`mira@hostpilot.test` darf nicht existieren; das Paket enthält keinen Seeder)
 - [ ] App auf dem Handy geöffnet und über «Zum Startbildschirm hinzufügen» installiert
 
 ## 9. Betrieb
@@ -116,8 +121,8 @@ Nach jeder Änderung an `.env` oder an Routen vorher `php artisan optimize:clear
 
 **Updates einspielen:**
 
-1. Lokal ändern, testen (`php artisan test`), `npm run build`.
-2. Geänderte Dateien (inkl. `public/build/`) hochladen.
+1. Lokal ändern und testen, dann `build-package.bat` ausführen.
+2. Das neue Paket hochladen und die Dateien überschreiben.
 3. Mit SSH: `php artisan migrate --force` und `php artisan optimize:clear`, danach wieder `config:cache`, `route:cache`, `view:cache`.
 
 **Fehler suchen:** `storage/logs/laravel-YYYY-MM-DD.log`. `APP_DEBUG` bleibt auf `false`, damit keine internen Details angezeigt werden.

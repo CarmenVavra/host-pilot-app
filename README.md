@@ -45,6 +45,7 @@ Demo-Login: `mira@hostpilot.test` / `password`
 
 - Anleitung für netcup: [docs/DEPLOYMENT-netcup.md](docs/DEPLOYMENT-netcup.md), Vorlage für die Server-`.env`: `.env.production.example`
 - Impressum und Datenschutzerklärung (`/impressum`, `/datenschutz`) lesen ihre Angaben aus den `LEGAL_*`-Werten der `.env`
+- `build-package.bat` erzeugt das fertige Upload-ZIP (`dist/hostpilot-upload-*.zip`)
 - Auf dem Server **nie** `db:seed` ausführen (Demo-User mit bekanntem Passwort)
 
 ## Entwicklung
