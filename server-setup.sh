@@ -7,7 +7,8 @@
 #
 #  Das Skript fragt alle Werte ab, schreibt die .env (Rechte 600),
 #  erzeugt den App-Schluessel, legt die Datenbank-Tabellen an und
-#  schaltet die Zwischenspeicher fuer den Betrieb ein.
+#  verknuepft den Bilder-Ordner (relativ).
+#  Es werden bewusst KEINE Config-/Routen-/View-Caches angelegt, siehe unten.
 #  Passwoerter werden beim Tippen nicht angezeigt und nirgends ausgegeben.
 # ==========================================================
 set -u
@@ -32,7 +33,7 @@ if [ -e public/.env ]; then
     say 'ACHTUNG: public/.env gefunden. Dort ist die Datei fuer jeden im Internet abrufbar!'
     read -r -p 'Jetzt loeschen? [J/n]: ' a
     case ${a:-J} in
-        n|N) echo 'Nicht geloescht. Bitte selbst entfernen.' ;;
+        n|N|nein|Nein|no|No|NO) echo 'Nicht geloescht. Bitte selbst entfernen.' ;;
         *)   rm -f public/.env && echo 'public/.env geloescht.' ;;
     esac
 fi
@@ -68,7 +69,7 @@ q() { local s=$1; s=${s//\\/\\\\}; s=${s//\"/\\\"}; s=${s//\$/\\\$}; printf '"%s
 if [ -f .env ]; then
     say 'Es gibt bereits eine .env.'
     read -r -p 'Ersetzen (die alte wird als .env.alt-DATUM gesichert)? [j/N]: ' a
-    case ${a:-N} in j|J) ;; *) fail 'Abgebrochen. Die vorhandene .env bleibt unveraendert.' ;; esac
+    case ${a:-N} in j|J|ja|Ja|JA|y|Y|yes|Yes|YES) ;; *) fail 'Abgebrochen. Die vorhandene .env bleibt unveraendert.' ;; esac
 fi
 
 say '--- Adresse der Seite ---'
@@ -155,10 +156,13 @@ umask 077
     echo "LEGAL_EMAIL=$(q "$LEGAL_EMAIL")"
 } > .env.neu || fail '.env konnte nicht geschrieben werden (Schreibrechte im Projektordner?).'
 mv -f .env.neu .env && chmod 600 .env
+# Nur die .env soll streng geschuetzt sein. Alles, was Laravel danach anlegt (Caches, Logs),
+# muss der Webserver lesen koennen - sonst gibt es eine leere 500-Seite.
+umask 022
 say '.env geschrieben (Rechte 600, nur du kannst sie lesen).'
 
 # ---------- 5. Laravel einrichten ----------
-chmod -R ug+rwX storage bootstrap/cache 2>/dev/null
+chmod -R u+rwX,go+rX storage bootstrap/cache 2>/dev/null
 mkdir -p storage/app/public storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache
 
 php artisan optimize:clear >/dev/null 2>&1
@@ -168,19 +172,23 @@ if ! php artisan migrate --force; then
     fail 'Die Datenbank-Einrichtung ist fehlgeschlagen. Meist stimmen Host, Name, Benutzer oder Passwort nicht. Pruefe die Werte im Kundenkontrollpanel und starte "bash server-setup.sh" erneut.'
 fi
 
-if [ ! -e public/storage ]; then
-    php artisan storage:link >/dev/null 2>&1 \
-        && echo 'Bilder-Ordner verknuepft.' \
-        || echo 'Hinweis: storage:link nicht moeglich (Symlinks evtl. nicht erlaubt). Bild-Upload bitte pruefen.'
-fi
+# Relativer Link per "ln -s": Die Kommandozeile sieht beim netcup-Webhosting andere (gekuerzte)
+# Pfade als der Webserver. Ein absoluter Link (artisan storage:link) wuerde fuer den Webserver ins
+# Leere zeigen, ein relativer funktioniert in beiden. ("artisan storage:link --relative" geht hier
+# nicht, es braucht das Paket symfony/filesystem, das im Produktiv-Paket nicht enthalten ist.)
+if [ -L public/storage ] || [ -e public/storage ]; then rm -f public/storage; fi
+ln -s ../storage/app/public public/storage 2>/dev/null \
+    && echo 'Bilder-Ordner verknuepft (relativ).' \
+    || echo 'Hinweis: Der Bilder-Link konnte nicht angelegt werden (Symlinks evtl. nicht erlaubt). Bild-Upload bitte pruefen.'
 
-say 'Schalte Zwischenspeicher fuer den Betrieb ein ...'
-php artisan config:cache && php artisan route:cache && php artisan view:cache
+# WICHTIG: Kein "config:cache" / "route:cache" / "view:cache"!
+# Diese Caches brennen die Pfade der Kommandozeile fest ein. Der Webserver sieht andere Pfade
+# (open_basedir) und scheitert dann bei jeder Seite mit einer leeren 500-Seite.
 
 # ---------- 6. Aufraeumen ----------
 if ls hostpilot-upload-*.zip >/dev/null 2>&1; then
     read -r -p 'Das Upload-ZIP im Projektordner loeschen? [J/n]: ' a
-    case ${a:-J} in n|N) ;; *) rm -f hostpilot-upload-*.zip && echo 'ZIP geloescht.' ;; esac
+    case ${a:-J} in n|N|nein|Nein|no|No|NO) ;; *) rm -f hostpilot-upload-*.zip && echo 'ZIP geloescht.' ;; esac
 fi
 
 # ---------- 7. Kontrolle von innen ----------

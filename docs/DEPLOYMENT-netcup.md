@@ -49,9 +49,10 @@ deshalb mit einer Fehlermeldung, statt den Demo-User mit dem Passwort `password`
 > `vendor/`, `storage/` …) liegt **eine Ebene darüber** im Projektordner und darf **nicht** in `public/` liegen.
 > Die `.env` gehört neben `artisan` und `composer.json`, **niemals** in den Ordner `public/`.
 >
-> **Hinweis nginx:** Antwortet dein Webhosting mit `server: nginx` (prüfbar mit `curl -I https://deine-domain.at`),
-> wird die mitgelieferte `public/.htaccess` **ignoriert**. Sie schützt dann nichts. Versteckte Dateien (`.env`, `.git` …)
-> werden ausgeliefert, sobald sie im öffentlichen Ordner liegen.
+> **Hinweis nginx vor Apache:** Antwortet dein Webhosting mit `server: nginx` (prüfbar mit `curl -I https://deine-domain.at`),
+> steht häufig ein nginx vor einem Apache (so bei Plesk; im Fehlerprotokoll steht dann «Apache-Fehler»). nginx liefert
+> **statische Dateien direkt aus**, ohne Apache und die `public/.htaccess` zu fragen. Versteckte Dateien (`.env`, `.git` …)
+> werden deshalb ausgeliefert, sobald sie im öffentlichen Ordner liegen. Die `.htaccess` schützt davor nicht.
 
 Die Domain muss auf `…/dein-projekt/public` zeigen, **nicht** auf den Projektordner.
 Sonst wären `.env` und der Quellcode aus dem Internet lesbar. Die Einstellung findest du im CCP bei
@@ -74,7 +75,7 @@ bash server-setup.sh
 Es fragt nach Adresse, Datenbank, Postfach und Impressum-Angaben (Passwörter werden nicht angezeigt) und
 schreibt daraus eine **gültige `.env`** mit Rechten `600`, ohne Platzhalter und mit korrekt behandelten Sonderzeichen.
 Danach erzeugt es einen neuen App-Schlüssel, legt die Datenbank-Tabellen an, verknüpft den Bilder-Ordner, schaltet die
-Zwischenspeicher ein und prüft am Ende die Seite (`/up`, `/login`, `/impressum`, `/.env`). Zusätzlich:
+den Bilder-Ordner (relativ) und prüft am Ende die Seite (`/up`, `/login`, `/impressum`, `/.env`). Zusätzlich:
 
 - löscht es auf Nachfrage eine versehentlich in `public/` liegende `.env`,
 - sichert eine vorhandene `.env` als `.env.alt-DATUM` (später löschen, sie enthält Geheimnisse),
@@ -118,21 +119,30 @@ sofern netcup den Zugriff von aussen erlaubt. Sonst frage den Support nach einer
 Hochgeladene Cover-Bilder liegen in `storage/app/public` und werden über `public/storage` ausgeliefert:
 
 ```bash
-php artisan storage:link
+ln -s ../storage/app/public public/storage
 ```
+
+Es muss ein **relativer** Link sein: Beim netcup-Webhosting sieht die Kommandozeile andere (gekürzte) Pfade als der Webserver.
+Ein absoluter Link (`php artisan storage:link`) würde für den Webserver ins Leere zeigen und Bilder nicht ausliefern.
+(`php artisan storage:link --relative` geht auf dem Server nicht, es braucht ein Paket, das im Produktiv-Paket fehlt.)
 
 Falls dein Tarif keine symbolischen Links erlaubt (prüfen), melde dich bei mir: Dann stellen wir den Bilder-Speicher
 auf einen Ordner direkt unter `public/` um.
 
-## 7. Für den Betrieb optimieren
+## 7. Keine Zwischenspeicher für Konfiguration, Routen und Ansichten
+
+> **Führe bei netcup bewusst KEIN `php artisan config:cache`, `route:cache` oder `view:cache` aus.**
+
+Diese Befehle speichern absolute Dateipfade fest ab. Die SSH-Kommandozeile sieht beim netcup-Webhosting aber **andere
+(gekürzte) Pfade** als der Webserver, z. B. `/deine-domain/projekt/storage` statt
+`/var/www/vhosts/…/deine-domain/projekt/storage`. Der Webserver darf nur seine eigenen Pfade lesen (`open_basedir`) und
+antwortet dann bei **jeder** Seite mit einer **leeren 500-Seite**, ohne Eintrag im Log.
+
+Ohne diese Caches läuft HostPilot für den erwarteten Gebrauch schnell genug. Falls du schon einmal Caches erzeugt hast:
 
 ```bash
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
+php artisan optimize:clear
 ```
-
-Nach jeder Änderung an `.env` oder an Routen vorher `php artisan optimize:clear` ausführen.
 
 ## 8. Checkliste vor dem Go-live
 
@@ -158,9 +168,13 @@ Nach jeder Änderung an `.env` oder an Routen vorher `php artisan optimize:clear
 
 1. Lokal ändern und testen, dann `build-package.bat` ausführen.
 2. Das neue Paket hochladen und die Dateien überschreiben.
-3. Mit SSH: `php artisan migrate --force` und `php artisan optimize:clear`, danach wieder `config:cache`, `route:cache`, `view:cache`.
+3. Mit SSH: `php artisan migrate --force` und `php artisan optimize:clear` (keine Caches wieder einschalten, siehe Abschnitt 7).
 
-**Fehler suchen:** `storage/logs/laravel-YYYY-MM-DD.log`. `APP_DEBUG` bleibt auf `false`, damit keine internen Details angezeigt werden.
+**Fehler suchen:**
+1. `storage/logs/laravel-YYYY-MM-DD.log`. `APP_DEBUG` bleibt auf `false`, damit keine internen Details angezeigt werden.
+2. Bei einer **leeren 500-Seite ohne Log-Eintrag** bricht PHP vor Laravel ab. Dann hilft das **Fehlerprotokoll der Domain** im
+   Hosting-Panel (Plesk: «Protokolle», Einträge «Apache-Fehler»). Typisch ist eine `open_basedir restriction`, die auf falsche
+   Pfade hinweist (siehe Abschnitt 7).
 
-**Weitere Härtung (optional):** Sicherheits-Header (HSTS, Content-Security-Policy) über das CCP bzw. die nginx-Einstellungen des Hosters (die `.htaccess` greift bei nginx nicht),
+**Weitere Härtung (optional):** Sicherheits-Header (HSTS, Content-Security-Policy) über das CCP bzw. die Webserver-Einstellungen des Hosters,
 eigene Fehlerseiten für 404/500 und E-Mail-Bestätigung bei der Registrierung, wenn die App öffentlich zugänglich ist.
