@@ -45,11 +45,23 @@ deshalb mit einer Fehlermeldung, statt den Demo-User mit dem Passwort `password`
 
 ## 3. Webverzeichnis auf `public/` stellen
 
+> **Wichtig – Ordnerstruktur:** Nur der Ordner `public/` ist aus dem Internet erreichbar. Alles andere (`.env`, `app/`,
+> `vendor/`, `storage/` …) liegt **eine Ebene darüber** im Projektordner und darf **nicht** in `public/` liegen.
+> Die `.env` gehört neben `artisan` und `composer.json`, **niemals** in den Ordner `public/`.
+>
+> **Hinweis nginx:** Antwortet dein Webhosting mit `server: nginx` (prüfbar mit `curl -I https://deine-domain.at`),
+> wird die mitgelieferte `public/.htaccess` **ignoriert**. Sie schützt dann nichts. Versteckte Dateien (`.env`, `.git` …)
+> werden ausgeliefert, sobald sie im öffentlichen Ordner liegen.
+
 Die Domain muss auf `…/dein-projekt/public` zeigen, **nicht** auf den Projektordner.
 Sonst wären `.env` und der Quellcode aus dem Internet lesbar. Die Einstellung findest du im CCP bei
 der Domain unter «Verzeichnis»/«Webroot» (prüfen).
 
-Prüfe nach dem Hochladen, dass `https://deine-domain.at/.env` einen **Fehler 404/403** liefert.
+Prüfe nach dem Hochladen, dass `https://deine-domain.at/.env` **nicht** mit `200` antwortet (404, 403 oder 500 sind in Ordnung,
+`200` bedeutet: Die Datei liegt im öffentlichen Ordner und ist für alle abrufbar).
+
+**Falls die `.env` doch einmal öffentlich war:** Sofort verschieben und danach alle darin stehenden Geheimnisse erneuern
+(Datenbank-Passwort, Postfach-Passwort, neuer `APP_KEY` mit `php artisan key:generate --force`).
 
 ## 4. `.env` auf dem Server anlegen
 
@@ -127,5 +139,5 @@ Nach jeder Änderung an `.env` oder an Routen vorher `php artisan optimize:clear
 
 **Fehler suchen:** `storage/logs/laravel-YYYY-MM-DD.log`. `APP_DEBUG` bleibt auf `false`, damit keine internen Details angezeigt werden.
 
-**Weitere Härtung (optional):** Sicherheits-Header (HSTS, Content-Security-Policy) über die `.htaccess` oder das CCP,
+**Weitere Härtung (optional):** Sicherheits-Header (HSTS, Content-Security-Policy) über das CCP bzw. die nginx-Einstellungen des Hosters (die `.htaccess` greift bei nginx nicht),
 eigene Fehlerseiten für 404/500 und E-Mail-Bestätigung bei der Registrierung, wenn die App öffentlich zugänglich ist.
