@@ -919,11 +919,39 @@ textarea {
 }
 
 .agenda-card__who {
+    width: 30px;
+    flex: none;
     display: flex;
     align-items: center;
     gap: 8px;
     font-size: 13px;
     font-weight: 600;
+}
+
+.agenda-card__name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.timeline-legend {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 4px 0 0;
+    padding: 0 var(--gutter) 0 calc(var(--gutter) + 76px);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.timeline-legend__dot {
+    width: 12px;
+    height: 12px;
+    flex: none;
+    background: var(--forest);
+    border: var(--line);
 }
 
 .agenda-card__tools {
@@ -2064,6 +2092,19 @@ textarea {
     .agenda-card__tools {
         display: flex;
         gap: 2px;
+    }
+
+    .agenda-card__who {
+        width: 150px;
+    }
+
+    .timeline {
+        padding-bottom: 8px;
+    }
+
+    .timeline-legend {
+        padding: 0 var(--gutter) 24px calc(var(--gutter) + 94px);
+        font-size: 13px;
     }
 
     .panel {

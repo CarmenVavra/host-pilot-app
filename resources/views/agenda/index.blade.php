@@ -8,6 +8,8 @@
     @php
         $items = $event->agendaItems;
         $selectedPerson = old('person_id', $editing ? $editing->person_id : $event->people->first()?->id);
+        // The green marker: the item running right now on the event day, otherwise the event start.
+        $highlightLabel = $event->date->isToday() ? 'Läuft gerade' : 'Beginn des Events'.($event->time ? ' ('.$event->time.')' : '');
     @endphp
 
     <div class="split">
@@ -29,7 +31,10 @@
                 <ol class="timeline">
                     @foreach ($items as $item)
                         <li class="timeline__item {{ $item->id === $highlightedId ? 'is-current' : '' }}">
-                            <div class="timeline__time"><time>{{ $item->time }}</time></div>
+                            <div class="timeline__time">
+                                <time>{{ $item->time }}</time>
+                                @if ($item->id === $highlightedId)<span class="sr-only">({{ $highlightLabel }})</span>@endif
+                            </div>
                             <div class="timeline__rail" aria-hidden="true"><span class="timeline__dot"></span><span class="timeline__line"></span></div>
                             <div class="timeline__body">
                                 <div class="swipe" data-swipe>
@@ -53,12 +58,13 @@
                                             <div class="agenda-card__title">{{ $item->title }}</div>
                                             @if ($item->note)<div class="agenda-card__note">{{ $item->note }}</div>@endif
                                         </div>
-                                        @if ($item->person)
-                                            <div class="agenda-card__who">
+                                        {{-- Fixed-width column so the initials line up on every card --}}
+                                        <div class="agenda-card__who">
+                                            @if ($item->person)
                                                 <x-avatar :person="$item->person" />
-                                                <span class="only-desktop" aria-hidden="true">{{ $item->person->name }}</span>
-                                            </div>
-                                        @endif
+                                                <span class="agenda-card__name only-desktop" aria-hidden="true">{{ $item->person->name }}</span>
+                                            @endif
+                                        </div>
                                         {{-- Web: tools always visible --}}
                                         <div class="agenda-card__tools">
                                             <a class="icon-btn" href="{{ route('events.agenda.edit', [$event, $item]) }}" aria-label="«{{ $item->title }}» ändern" title="Ändern">
@@ -78,6 +84,12 @@
                         </li>
                     @endforeach
                 </ol>
+                @if ($highlightedId)
+                    <p class="timeline-legend">
+                        <span class="timeline-legend__dot" aria-hidden="true"></span>
+                        Grün markiert: {{ $highlightLabel }}
+                    </p>
+                @endif
             @endif
         </section>
 

@@ -39,6 +39,26 @@ class AgendaTest extends TestCase
             ->assertSee('Neuer Programmpunkt');
     }
 
+    public function test_green_marker_is_explained_by_a_legend(): void
+    {
+        $this->event->agendaItems()->create(['time' => '09:00', 'title' => 'Vorbereiten']);
+        $this->event->agendaItems()->create(['time' => '10:00', 'title' => 'Ankunft Toni']);
+
+        $this->actingAs($this->user)->get(route('events.agenda.index', $this->event))
+            ->assertStatus(200)
+            ->assertSee('Grün markiert: Beginn des Events (10:00)')
+            ->assertSeeInOrder(['10:00', '(Beginn des Events (10:00))', 'Ankunft Toni']);
+    }
+
+    public function test_no_legend_without_marked_item(): void
+    {
+        $this->event->agendaItems()->create(['time' => '09:00', 'title' => 'Vorbereiten']);
+
+        $this->actingAs($this->user)->get(route('events.agenda.index', $this->event))
+            ->assertStatus(200)
+            ->assertDontSee('Grün markiert');
+    }
+
     public function test_item_can_be_added(): void
     {
         $person = Person::factory()->for($this->event)->create();
