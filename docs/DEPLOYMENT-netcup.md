@@ -63,10 +63,33 @@ Prüfe nach dem Hochladen, dass `https://deine-domain.at/.env` **nicht** mit `20
 **Falls die `.env` doch einmal öffentlich war:** Sofort verschieben und danach alle darin stehenden Geheimnisse erneuern
 (Datenbank-Passwort, Postfach-Passwort, neuer `APP_KEY` mit `php artisan key:generate --force`).
 
-## 4. `.env` auf dem Server anlegen
+## 4. Einrichten mit dem Skript (empfohlen, per SSH)
+
+Das Skript `server-setup.sh` erledigt die Schritte 4 bis 7 gefragt und fehlerarm:
+
+```bash
+bash server-setup.sh
+```
+
+Es fragt nach Adresse, Datenbank, Postfach und Impressum-Angaben (Passwörter werden nicht angezeigt) und
+schreibt daraus eine **gültige `.env`** mit Rechten `600`, ohne Platzhalter und mit korrekt behandelten Sonderzeichen.
+Danach erzeugt es einen neuen App-Schlüssel, legt die Datenbank-Tabellen an, verknüpft den Bilder-Ordner, schaltet die
+Zwischenspeicher ein und prüft am Ende die Seite (`/up`, `/login`, `/impressum`, `/.env`). Zusätzlich:
+
+- löscht es auf Nachfrage eine versehentlich in `public/` liegende `.env`,
+- sichert eine vorhandene `.env` als `.env.alt-DATUM` (später löschen, sie enthält Geheimnisse),
+- zeigt bei Problemen die letzte Fehlerzeile aus dem Log.
+
+Das Skript ist im Upload-ZIP enthalten. Vorher bereithalten: Datenbank-Name, -Benutzer und -Passwort sowie die
+SMTP-Daten deines Postfachs aus dem Kundenkontrollpanel.
+
+Die folgenden Abschnitte 4a bis 7 beschreiben dasselbe von Hand. Du brauchst sie nur, wenn du das Skript nicht nutzen kannst.
+
+## 4a. `.env` von Hand anlegen
 
 1. Kopiere `.env.production.example` auf dem Server nach `.env`.
-2. Ersetze alle `<…>`-Werte: Domain, Datenbank, Postfach und die **Impressum-Angaben** (`LEGAL_*`).
+2. Ersetze alle `<…>`-Werte: Domain, Datenbank, Postfach und die **Impressum-Angaben** (`LEGAL_*`). Die spitzen Klammern müssen
+   dabei **mit** verschwinden, sonst bricht `artisan` mit «Invalid URI: Host is malformed» ab.
 3. Erzeuge einen **neuen** App-Schlüssel (mit SSH):
 
 ```bash
