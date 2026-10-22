@@ -178,3 +178,57 @@ php artisan optimize:clear
 
 **Weitere Härtung (optional):** Sicherheits-Header (HSTS, Content-Security-Policy) über das CCP bzw. die Webserver-Einstellungen des Hosters,
 eigene Fehlerseiten für 404/500 und E-Mail-Bestätigung bei der Registrierung, wenn die App öffentlich zugänglich ist.
+
+## 10. Lokale Daten auf den Server übertragen
+
+Deine lokalen Events (mit Ablauf, Rezepten, Einkaufsliste, Themen und **Bildern**) lassen sich in eine einzige Datei
+exportieren und auf dem Server in dein dortiges Konto einlesen. Es werden **keine Passwörter und keine Konto-Daten**
+übertragen, nur Inhalte. Ein Fehler in der Datei lässt nichts halb importiert zurück.
+
+**Voraussetzung:** Du hast dich auf dem Server schon registriert, und der Server läuft mit der aktuellen Version
+(neues Paket mit `build-package.bat` bauen, hochladen und die Dateien überschreiben; die Befehle `hostpilot:export` und
+`hostpilot:import` sind erst darin enthalten).
+
+### Schritt 1: Auf deinem Rechner exportieren
+
+Doppelklick auf `export-data.bat` und die E-Mail-Adresse deines **lokalen** Kontos bestätigen (Vorschlag: Enter).
+Die Datei liegt danach in `storage\app\exports\hostpilot-export-JJJJMMTT-HHMMSS.json`. Alternativ von Hand:
+
+```bash
+php artisan hostpilot:export --user=deine-lokale@email.at
+```
+
+### Schritt 2: Datei auf den Server bringen
+
+Lade die Datei per Dateimanager oder (S)FTP in den Ordner `storage/app/` **im Projektordner** hoch.
+
+> **Wichtig:** **Nie** in den Ordner `public/`. Die Datei enthält deine Inhalte und wäre sonst für jeden abrufbar
+> (dasselbe Problem wie bei der `.env`).
+
+### Schritt 3: Auf dem Server importieren
+
+Zuerst ein **Testlauf**, der nur anzeigt, was passieren würde:
+
+```bash
+php artisan hostpilot:import storage/app/hostpilot-export-JJJJMMTT-HHMMSS.json --to=deine-server@email.at --dry-run
+```
+
+`--to` ist die E-Mail-Adresse deines Kontos **auf dem Server**. Passt die Anzeige, importiere wirklich (der Befehl
+fragt vorher nach):
+
+```bash
+php artisan hostpilot:import storage/app/hostpilot-export-JJJJMMTT-HHMMSS.json --to=deine-server@email.at
+```
+
+- Events, die es im Zielkonto schon mit **gleichem Titel und Datum** gibt, werden **übersprungen**. Du kannst den
+  Import also gefahrlos wiederholen. Mit `--allow-duplicates` werden sie trotzdem angelegt.
+- Hat die Datei Fehler (falsches Format, ungültige Werte, kein echtes Bild), bricht der Import ab und meldet, was nicht
+  stimmt. Es wird dann nichts verändert.
+
+### Schritt 4: Aufräumen
+
+```bash
+rm storage/app/hostpilot-export-*.json
+```
+
+Lösche die Datei auch auf deinem Rechner (`storage\app\exports\`), wenn du sie nicht mehr brauchst.
