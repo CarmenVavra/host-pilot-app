@@ -11,6 +11,7 @@
             </a>
             @yield('content')
         </div>
+        <x-legal-links />
     </main>
     <x-toast />
 </body>

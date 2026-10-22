@@ -36,6 +36,7 @@
         <main id="main" class="main" tabindex="-1">
             <div class="statusbar-space only-mobile"></div>
             @yield('content')
+            <x-legal-links />
         </main>
     </div>
 

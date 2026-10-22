@@ -48,5 +48,22 @@
                 <button type="submit" class="btn btn--ghost"><x-icon name="logout" :size="18" />Abmelden</button>
             </form>
         </section>
+
+        <section class="card card--danger" aria-labelledby="delete-heading">
+            <h2 id="delete-heading">Konto löschen</h2>
+            <p class="card__text">
+                Dein Konto und <strong>alle</strong> deine Daten werden unwiderruflich gelöscht: Events mit Ablauf,
+                Rezepten, Einkaufslisten, Themen und hochgeladenen Bildern.
+            </p>
+            <form class="form" method="POST" action="{{ route('profile.destroy') }}"
+                  data-confirm="Konto und alle Daten endgültig löschen?" data-confirm-button="Konto löschen">
+                @csrf
+                @method('DELETE')
+                <x-input name="delete_password" label="Passwort zur Bestätigung" type="password" bag="deleteAccount" required autocomplete="current-password" />
+                <div class="form-actions">
+                    <button type="submit" class="btn btn--danger"><x-icon name="trash" :size="18" />Konto löschen</button>
+                </div>
+            </form>
+        </section>
     </div>
 @endsection

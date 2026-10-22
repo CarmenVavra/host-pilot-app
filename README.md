@@ -41,6 +41,12 @@ Demo-Login: `mira@hostpilot.test` / `password`
 - Einkaufsliste: «Aus Rezepten generieren» (summiert gleiche Zutaten, behält manuelle Einträge und Haken), Live-Abhaken
 - Themen: beliebig viele Gesprächsthemen pro Event mit Überschrift und Notizen (anlegen, bearbeiten, löschen)
 
+## Online stellen
+
+- Anleitung für netcup: [docs/DEPLOYMENT-netcup.md](docs/DEPLOYMENT-netcup.md), Vorlage für die Server-`.env`: `.env.production.example`
+- Impressum und Datenschutzerklärung (`/impressum`, `/datenschutz`) lesen ihre Angaben aus den `LEGAL_*`-Werten der `.env`
+- Auf dem Server **nie** `db:seed` ausführen (Demo-User mit bekanntem Passwort)
+
 ## Entwicklung
 
 ```bash

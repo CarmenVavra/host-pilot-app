@@ -6,12 +6,17 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\LegalController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\ShoppingItemController;
 use App\Http\Controllers\TopicController;
 use Illuminate\Support\Facades\Route;
+
+// Public legal pages (reachable without login, linked in every footer)
+Route::get('impressum', [LegalController::class, 'imprint'])->name('legal.imprint');
+Route::get('datenschutz', [LegalController::class, 'privacy'])->name('legal.privacy');
 
 Route::middleware('guest')->group(function () {
     Route::get('registrieren', [RegisteredUserController::class, 'create'])->name('register');
@@ -37,6 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::get('profil', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('profil', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('profil/passwort', [ProfileController::class, 'updatePassword'])->name('profile.password');
+    Route::delete('profil', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('events', EventController::class);
 
