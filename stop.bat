@@ -15,12 +15,12 @@ taskkill /F /T /FI "WINDOWTITLE eq HostPilot-Backend*" >nul 2>&1
 taskkill /F /T /FI "WINDOWTITLE eq HostPilot-Frontend*" >nul 2>&1
 
 REM --- Falls noch etwas auf dem Backend-Port lauscht: beenden ---
-for /f "tokens=5" %%p in ('netstat -ano ^| findstr /R /C:":%APP_PORT% .*LISTENING"') do (
+for /f "tokens=5" %%p in ('netstat -ano ^| findstr /R /C:":%APP_PORT%  *0\.0\.0\.0:0 " /C:":%APP_PORT%  *\[::\]:0 "') do (
     taskkill /F /T /PID %%p >nul 2>&1
 )
 
 REM --- Vite-Dev-Server (fester Port, siehe vite.config.js) ---
-for /f "tokens=5" %%p in ('netstat -ano ^| findstr /R /C:":%VITE_PORT% .*LISTENING"') do (
+for /f "tokens=5" %%p in ('netstat -ano ^| findstr /R /C:":%VITE_PORT%  *0\.0\.0\.0:0 " /C:":%VITE_PORT%  *\[::\]:0 "') do (
     taskkill /F /T /PID %%p >nul 2>&1
 )
 if exist "public\hot" del /q "public\hot"

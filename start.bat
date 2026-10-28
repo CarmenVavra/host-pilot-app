@@ -9,7 +9,7 @@ cd /d "%~dp0"
 set APP_PORT=8350
 
 REM --- Port pruefen ---
-netstat -ano | findstr /R /C:":%APP_PORT% .*LISTENING" >nul
+netstat -ano | findstr /R /C:":%APP_PORT%  *0\.0\.0\.0:0 " /C:":%APP_PORT%  *\[::\]:0 " >nul
 if %errorlevel%==0 (
     echo [HostPilot] Port %APP_PORT% ist bereits belegt. Laeuft die App schon? Sonst zuerst stop.bat ausfuehren.
     pause
